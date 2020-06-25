@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b207f31df66e482b93002276072931bf, type: 3}
+  m_Name: Bright Stars
+  m_EditorClassIdentifier: 
+  Speed: -0.01
+  Material: {fileID: 2100000, guid: 8919c7019a919ee4ea35cd3d783c2b0a, type: 2}
+  SceneObject: {fileID: 0}
+  Offset: {x: 10.4937935, y: -382.1034, z: -59.999836}

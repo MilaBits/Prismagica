@@ -1,0 +1,294 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35648741dd5b14baa82bec08abfe7457, type: 3}
+  m_Name: PlanetariumLineVec
+  m_EditorClassIdentifier: 
+  _lastTimeModified: 637286873454328024
+  _documentAsset: {fileID: 4357468122094827974}
+  _sharedMesh: {fileID: 1189776545608000896}
+  _antialiasing: 0
+  _generateCollider: 0
+  _keepSVGFile: 1
+  _ignoreSVGCanvas: 1
+  _colliderShape: []
+  _format: 1
+  _useGradients: 0
+  _meshCompression: 0
+  _optimizeMesh: 1
+  _generateNormals: 0
+  _generateTangents: 0
+  _scale: 0.01
+  _vpm: 1000
+  _depthOffset: 0.01
+  _compressDepth: 1
+  _pivotPoint: {x: 0.5, y: 0.5}
+  _customPivotPoint: 0
+  _border: {x: 0, y: 0, z: 0, w: 0}
+  _sliceMesh: 0
+  _sharedGradients:
+  - colorKeys:
+    - time: 1
+      color:
+        serializedVersion: 2
+        rgba: 4294967295
+    - time: 0
+      color:
+        serializedVersion: 2
+        rgba: 4294967295
+    alphaKeys:
+    - time: 1
+      alpha: 1
+    - time: 0
+      alpha: 1
+    index: 0
+  _sharedShaders:
+  - SVG Importer/GradientColor/GradientColorAlphaBlended
+  _canvasRectangle:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 14.173228
+    height: 14.173228
+  _useLayers: 0
+  _layers: []
+--- !u!43 &1189776545608000896
+Mesh:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlanetariumLineVec
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 186
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 72
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 2.0001302, y: 2, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 0000010002000300010000000400010003000400050001000600050004000700050006000700080005000800070009000a000b000c000a000d000b000e000d000a000e000f000d0010000f000e00100011000f001000120011001300120010001200130014001500160017001800160015001800190016001a00190018001a001b0019001c001b001a001c001d001b001c001e001d001f001e001c001f0020001e0020001f00210022001d001e0023001d002200230024001d002500240023002500260024002700260025002700280026002700290028002a00290027002b0029002a002b002c0029002d002c002b002e002c002d002e002f002c002f002e00300028003100320031002800290033003400350033003600340037003600330037003800360037003900380037003a0039003b003a0037003a003b003c0035003d003e003d00350034003f0040004100420040003f00430040004200430044004000430045004400460045004300450046004700
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 72
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 12
+      format: 2
+      dimension: 4
+    - stream: 0
+      offset: 16
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 2304
+    _typelessdata: e8f6fe3f08c9fa3f00000000000000ff000000000000000000000000000000001afaff3fc05bfc3f00000000000000ff000000000000000000000000000000003a92ff3f562bfb3f00000000000000ff00000000000000000000000000000000bc0afd3f5e2efa3f00000000000000ff00000000000000000000000000000000881ffb3f793bfa3f00000000000000ff000000000000000000000000000000000cfdff3f0000004000000000000000ff0000000000000000000000000000000028a0f93f2523fb3f00000000000000ff000000000000000000000000000000005ae6f83f1618fe3f00000000000000ff00000000000000000000000000000000425bfa3f0000004000000000000000ff00000000000000000000000000000000f2d2f93f1f85ff3f00000000000000ff000000000000000000000000000000007a7af93f000000c000000000000000ff000000000000000000000000000000006861ff3f1600fbbf00000000000000ff0000000000000000000000000000000022020040000000c000000000000000ff0000000000000000000000000000000098e2fe3f7a3bfabf00000000000000ff000000000000000000000000000000008863f93f3047ffbf00000000000000ff000000000000000000000000000000008464fd3fe83af9bf00000000000000ff000000000000000000000000000000004e5df93f58e7fcbf00000000000000ff00000000000000000000000000000000fc87fc3f3616f9bf00000000000000ff0000000000000000000000000000000074abfb3fe83af9bf00000000000000ff000000000000000000000000000000003eaef93f6601fbbf00000000000000ff00000000000000000000000000000000622dfa3f243cfabf00000000000000ff0000000000000000000000000000000080758e3c54918abf00000000000000ff0000000000000000000000000000000000a3e43c4c1f8abf00000000000000ff0000000000000000000000000000000080d4cf3c2afb8abf00000000000000ff000000000000000000000000000000000044453b26c789bf00000000000000ff000000000000000000000000000000000052e83b6ecf88bf00000000000000ff00000000000000000000000000000000005a7abb480d8abf00000000000000ff00000000000000000000000000000000805906bc82ad86bf00000000000000ff00000000000000000000000000000000e0d32bbd4cf889bf00000000000000ff0000000000000000000000000000000080cd4cbcb81e85bf00000000000000ff0000000000000000000000000000000080ab04bdd69587bf00000000000000ff0000000000000000000000000000000000f775bd48e18abf00000000000000ff00000000000000000000000000000000a06340bd441289bf00000000000000ff00000000000000000000000000000000f03e80bde4fc89bf00000000000000ff00000000000000000000000000000000806de2bcb6a186bf00000000000000ff00000000000000000000000000000000c00eb9bc80f184bf00000000000000ff00000000000000000000000000000000806963bc4cef7bbf00000000000000ff000000000000000000000000000000008025afbc74ea7abf00000000000000ff0000000000000000000000000000000000a95ebc30b2bdbe00000000000000ff00000000000000000000000000000000c0ddb0bc30b2bdbe00000000000000ff000000000000000000000000000000000050ae3ac043b1be00000000000000ff0000000000000000000000000000000000812d3c4803a8be00000000000000ff0000000000000000000000000000000020cf03bd0812b4be00000000000000ff00000000000000000000000000000000e09341bd68beacbe00000000000000ff00000000000000000000000000000000e04744bd3845a7be00000000000000ff0000000000000000000000000000000060918abd18c6a6be00000000000000ff0000000000000000000000000000000040708ebdf073a5be00000000000000ff00000000000000000000000000000000908886bd082aa3be00000000000000ff0000000000000000000000000000000060008cbd58b2a3be00000000000000ff0000000000000000000000000000000080fbc63c58e3a5be00000000000000ff000000000000000000000000000000008072dc3c383ba9be00000000000000ff000000000000000000000000000000009a9efcbfc0fbffbf00000000000000ff000000000000000000000000000000001a1cf9bf8481fbbf00000000000000ff00000000000000000000000000000000adc5fbbffaf2febf00000000000000ff00000000000000000000000000000000954df9bf021dfabf00000000000000ff000000000000000000000000000000007a0100c0aeffffbf00000000000000ff000000000000000000000000000000004035fabfe4b4f8bf00000000000000ff000000000000000000000000000000004091fbbf7cd0f7bf00000000000000ff00000000000000000000000000000000408cfcbf60b0f7bf00000000000000ff000000000000000000000000000000007a0100c0f80bfabf00000000000000ff000000000000000000000000000000007064febf9665f8bf00000000000000ff00000000000000000000000000000000d066f9bfc0bcfcbf00000000000000ff00000000000000000000000000000000c603fabfe69bfdbf00000000000000ff000000000000000000000000000000006861fbbf3220fb3f00000000000000ff00000000000000000000000000000000e184fabfcedffc3f00000000000000ff000000000000000000000000000000007bc2fabf6210fc3f00000000000000ff000000000000000000000000000000005748fdbf4c32fa3f00000000000000ff000000000000000000000000000000007962febf8c4afa3f00000000000000ff00000000000000000000000000000000c863fabf2c0eff3f00000000000000ff000000000000000000000000000000003d83fabf0000004000000000000000ff0000000000000000000000000000000092f2ffbf693afb3f00000000000000ff00000000000000000000000000000000220200c00000004000000000000000ff00000000000000000000000000000000
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 2.0001302, y: 2, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
+--- !u!114 &4357468122094827974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363e9872ad27a4ca59c07d233fdf0023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _errors: 
+  _svgFile: "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created
+    with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n  
+    xmlns:cc=\"http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n  
+    xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n  
+    xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n  
+    width=\"400mm\"\n   height=\"400mm\"\n   viewBox=\"0 0 400 400\"\n   version=\"1.1\"\n  
+    id=\"svg8\"\n   inkscape:version=\"0.92.4 (5da689c313, 2019-01-14)\"\n   sodipodi:docname=\"PlanetariumLineVec.svg\">\n 
+    <defs\n     id=\"defs2\" />\n  <sodipodi:namedview\n     id=\"base\"\n     pagecolor=\"#ffffff\"\n    
+    bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageopacity=\"0.0\"\n    
+    inkscape:pageshadow=\"2\"\n     inkscape:zoom=\"0.35\"\n     inkscape:cx=\"50.382437\"\n    
+    inkscape:cy=\"971.81103\"\n     inkscape:document-units=\"mm\"\n     inkscape:current-layer=\"layer1\"\n    
+    showgrid=\"false\"\n     fit-margin-top=\"0\"\n     fit-margin-left=\"0\"\n    
+    fit-margin-right=\"0\"\n     fit-margin-bottom=\"0\"\n     inkscape:window-width=\"1920\"\n    
+    inkscape:window-height=\"1017\"\n     inkscape:window-x=\"1272\"\n     inkscape:window-y=\"-8\"\n    
+    inkscape:window-maximized=\"1\" />\n  <metadata\n     id=\"metadata5\">\n   
+    <rdf:RDF>\n      <cc:Work\n         rdf:about=\"\">\n        <dc:format>image/svg+xml</dc:format>\n       
+    <dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\"
+    />\n        <dc:title></dc:title>\n      </cc:Work>\n    </rdf:RDF>\n  </metadata>\n 
+    <g\n     inkscape:label=\"Layer 1\"\n     inkscape:groupmode=\"layer\"\n    
+    id=\"layer1\"\n     transform=\"translate(497.51785,-23.34524)\">\n    <path\n      
+    style=\"fill:#000000;stroke-width:0.1\"\n       d=\"m -497.5174,421.02024 4.5e-4,-2.325
+    0.55841,-0.62597 c 0.94584,-1.06029 1.86001,-1.41134 2.91335,-1.11874 0.68824,0.19119
+    1.55255,1.06894 1.76845,1.79597 0.22726,0.76527 0.20154,1.45296 -0.0767,2.05044
+    -0.24234,0.52041 -0.56491,0.83555 -1.41164,1.37911 -0.27348,0.17555 -0.63348,0.50769
+    -0.8,0.73808 l -0.30278,0.41889 -1.325,0.006 -1.325,0.006 z m 394.84357,1.76173
+    c -0.12527,-1.00255 -6e-5,-2.83245 0.22838,-3.33774 0.39484,-0.87337 1.32455,-1.49899
+    2.2276,-1.49899 0.901,0 1.83266,0.6255 2.22544,1.4941 0.15166,0.3354 0.22087,0.78821
+    0.28274,1.85 0.04506,0.77325 0.11175,1.55215 0.14822,1.7309 l 0.0663,0.325 h
+    -2.55415 -2.55416 z m -193.09574,-91.18009 c -0.43906,-0.17774 -0.94862,-0.40147
+    -1.13237,-0.49717 -0.29592,-0.15413 -0.35305,-0.15709 -0.5,-0.0259 -0.13238,0.11813
+    -0.52379,0.14989 -1.93657,0.1571 -1.03099,0.005 -1.86646,-0.0343 -2,-0.0948 -0.18786,-0.0851
+    -0.39755,-0.0308 -1.15934,0.30016 -0.5115,0.22221 -0.96835,0.40401 -1.01522,0.40401
+    -0.10282,0 -0.32125,-0.59245 -0.25685,-0.69665 0.0251,-0.0405 0.26076,-0.15445
+    0.5238,-0.25317 1.54653,-0.58038 2.43218,-1.28588 2.97412,-2.36915 0.19478,-0.38935
+    0.35415,-0.7738 0.35415,-0.85435 0,-0.0806 0.0678,-0.28926 0.15059,-0.4638 0.13335,-0.28101
+    0.14766,-4.12517 0.125,-33.56512 l -0.0256,-33.24776 -0.49297,-0.95 c -0.71438,-1.37671
+    -1.5299,-2.15078 -3.14598,-2.98609 -0.98386,-0.50853 -1.21159,-0.66575 -1.1567,-0.79855
+    0.0376,-0.0909 0.0913,-0.24537 0.11939,-0.34316 0.0639,-0.22242 0.20285,-0.18256
+    1.33051,0.3816 0.66236,0.33137 0.8946,0.4048 1.03382,0.32688 0.10678,-0.0598
+    0.53058,-0.0758 1.04574,-0.0396 0.4764,0.0335 1.72119,0.0958 2.76619,0.13855
+    1.83938,0.0752 1.91828,0.0704 2.47301,-0.15096 0.31516,-0.12576 0.59201,-0.22865
+    0.61522,-0.22865 0.0343,0 0.26177,0.56826 0.26177,0.65384 0,0.0132 -0.46703,0.25212
+    -1.03784,0.53092 -1.26754,0.61911 -1.92531,1.28187 -2.58254,2.60217 l -0.42962,0.86307
+    -0.0292,33.15 c -0.0271,30.76851 -0.0171,33.1967 0.13868,33.8 0.47844,1.85245
+    1.26809,2.71299 3.21552,3.50417 0.45375,0.18434 0.825,0.36615 0.825,0.40402 0,0.0379
+    -0.057,0.20447 -0.12672,0.37024 l -0.12673,0.30138 z M -496.2465,27.805247 c
+    -0.26326,-0.07202 -0.64576,-0.266139 -0.85,-0.431377 l -0.37135,-0.300433 -0.0272,-1.864099
+    -0.0272,-1.864098 h 2.1503 2.1503 l 0.0647,0.257674 c 0.0356,0.14172 0.0435,0.71547
+    0.0176,1.275 -0.0353,0.762162 -0.10434,1.149188 -0.27539,1.543054 -0.48552,1.117929
+    -1.67672,1.700248 -2.83172,1.384279 z m 394.928,0.04656 c -1.91363,-0.582101
+    -2.46485,-2.825655 -1.01508,-4.131566 l 0.41631,-0.375 h 2.19971 2.19971 v 1.732569
+    c 0,1.933289 0.02734,1.853252 -0.8,2.34172 -0.76505,0.451688 -2.23885,0.664006
+    -3.00065,0.432277 z\"\n       id=\"path34\"\n       inkscape:connector-curvature=\"0\"
+    />\n  </g>\n</svg>\n"
+  _title: 
+  _description: 

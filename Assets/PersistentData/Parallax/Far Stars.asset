@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b207f31df66e482b93002276072931bf, type: 3}
+  m_Name: Far Stars
+  m_EditorClassIdentifier: 
+  Speed: 0.01
+  Material: {fileID: 2100000, guid: dcb1ef287e0d9af47873d5b7e60a8131, type: 2}
+  SceneObject: {fileID: 0}
+  Offset: {x: 10.048776, y: -370.59335, z: -57.999783}
