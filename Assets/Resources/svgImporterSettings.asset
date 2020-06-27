@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSVGFormat: 1
   defaultUseGradients: 0
-  defaultAntialiasing: 0
+  defaultAntialiasing: 1
   defaultAntialiasingWidth: 2
   defaultMeshCompression: 0
-  defaultVerticesPerMeter: 1000
+  defaultVerticesPerMeter: 200
   defaultScale: 0.01
   defaultDepthOffset: 0.01
   defaultCompressDepth: 1
   defaultCustomPivotPoint: 0
   defaultPivotPoint: {x: 0.5, y: 0.5}
-  defaultGenerateCollider: 0
+  defaultGenerateCollider: 1
   defaultKeepSVGFile: 1
   defaultUseLayers: 0
   defaultIgnoreSVGCanvas: 1

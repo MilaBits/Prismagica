@@ -57,6 +57,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
+        
         horizontalFlipScale = animator.transform.localScale.x;
     }
 
@@ -69,7 +70,7 @@ public class Movement : MonoBehaviour
 
     private void FlipStuff()
     {
-        if (flipCollider.canFlip)
+        if (flipCollider.CanFlip)
         {
             if (!previousFlippable)
             {
@@ -86,7 +87,7 @@ public class Movement : MonoBehaviour
             flipSpriteOffset.rotation = Quaternion.Lerp(flipSpriteOffset.rotation,
                 Quaternion.LookRotation(Vector3.forward, -hit.normal), Time.deltaTime * rotationAdjustmentSpeed);
         }
-        else if (!flipCollider.canFlip)
+        else if (!flipCollider.CanFlip)
         {
             if (previousFlippable)
             {
@@ -95,7 +96,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        previousFlippable = flipCollider.canFlip;
+        previousFlippable = flipCollider.CanFlip;
     }
 
     void Move()
@@ -190,7 +191,7 @@ public class Movement : MonoBehaviour
 
     private void flip()
     {
-        if (flipCollider.canFlip)
+        if (flipCollider.CanFlip)
         {
             transform.RotateAround(transform.TransformPoint(flipPivotPoint), Vector3.forward, 180);
         }
