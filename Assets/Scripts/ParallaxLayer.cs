@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace UI
 {
     [CreateAssetMenu(menuName = "Alchemage/ParallaxLayer")]
+    [Serializable]
     public class ParallaxLayer : ScriptableObject
     {
         public float Speed;
