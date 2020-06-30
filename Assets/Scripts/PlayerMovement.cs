@@ -1,57 +1,64 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Mechanics;
+using Shapes;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private FlipCollider _flipCollider;
-
-    [SerializeField]
-    private Vector3 _flipPivotPoint;
-
-    private Rigidbody2D _rigidbody;
-
-    [SerializeField]
-    private bool showDebug;
+    private float moveSpeed;
 
     [SerializeField]
     public LayerMask ground = default;
 
+    [SerializeField]
+    private Color flipVisibleColor = default;
+
+    [Header("References")]
     [SerializeField]
     private Animator animator = default;
 
     [SerializeField]
     private Animator flippedAnimator = default;
 
-    private float horizontalFlipScale;
+    [SerializeField]
+    private FlipCollider flipCollider;
 
     [SerializeField]
-    private Color flipVisibleColor = default;
-
-    [SerializeField]
-    private float rotationAdjustmentSpeed = 5f;
-
-    private static readonly int walking = Animator.StringToHash("Walking");
-
-    [SerializeField]
-    private float _moveSpeed;
-
-
-    private float EDGE_CAST_WIDTH = .15f;
-    private const float EDGE_CAST_DEPTH = .3f;
-    private const float CEILING_CAST_WIDTH = .21f;
-
-    private Vector2 _move;
-
-    private bool previousFlippable;
-    private Coroutine coroutine;
-    private bool fadeRunning;
+    private Vector3 flipPivotPoint;
 
     [SerializeField]
     private Transform flipSpriteOffset = default;
+
+    [Header("Move Detection")]
+    [SerializeField]
+    private float edgeCastWidth = .15f;
+
+    [SerializeField]
+    private float edgeCastDepth = .3f;
+
+    [SerializeField]
+    private float wallCastDistance = .21f;
+
+    [SerializeField]
+    private float wallCastHeight = .45f;
+
+    [Header("Debug")]
+    [SerializeField]
+    private bool showDebug;
+
+    [SerializeField]
+    private Disc debugDisc;
+
+
+    private Vector2 _move;
+    private Rigidbody2D _rigidbody;
+    private float horizontalFlipScale;
+    private static readonly int Walking = Animator.StringToHash("Walking");
+    private bool previousFlippable;
+    private Coroutine coroutine;
+    private bool fadeRunning;
 
     private void Start()
     {
@@ -62,48 +69,103 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Flip")) flip();
+        if (Input.GetButtonDown("Flip")) Flip();
         Move();
         Animate(_move);
-        FlipStuff();
+        VisualizeMirrorImage();
     }
 
     void Move()
     {
         _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (_move == Vector2.zero) return;
 
+        MoveDirection direction = MoveDirection.None;
+        if (_move.x != 0) direction = _move.x > 0 ? MoveDirection.Right : MoveDirection.Left;
+        if (direction == MoveDirection.None) return;
+
+        // Check Ground surrounding player (to prevent walking off/up steep edges
         Ray leftEdgeRay = new Ray(
             transform.position +
-            transform.TransformDirection(new Vector3(-EDGE_CAST_WIDTH, .20f, 0)),
-            transform.TransformDirection(Vector3.down * EDGE_CAST_DEPTH));
+            transform.TransformDirection(new Vector3(-edgeCastWidth, .20f, 0)),
+            transform.TransformDirection(Vector3.down * edgeCastDepth));
         Ray rightEdgeRay = new Ray(
             transform.position +
-            transform.TransformDirection(new Vector3(EDGE_CAST_WIDTH, .20f, 0)),
-            transform.TransformDirection(Vector3.down * EDGE_CAST_DEPTH));
+            transform.TransformDirection(new Vector3(edgeCastWidth, .20f, 0)),
+            transform.TransformDirection(Vector3.down * edgeCastDepth));
 
-        RaycastHit2D leftEdgeCast = Physics2D.Raycast(leftEdgeRay.origin, leftEdgeRay.direction, 1f, ground);
-        RaycastHit2D rightEdgeCast = Physics2D.Raycast(rightEdgeRay.origin, rightEdgeRay.direction, 1f, ground);
+        RaycastHit2D leftEdge = Physics2D.Raycast(
+            leftEdgeRay.origin,
+            leftEdgeRay.direction,
+            1f, ground);
+        RaycastHit2D rightEdge = Physics2D.Raycast(
+            rightEdgeRay.origin,
+            rightEdgeRay.direction,
+            1f, ground);
 
-        if (showDebug)
+        //Check Wall near player (to prevent clipping through Wall)
+        Vector3 wallCastOrigin =
+            transform.position + transform.TransformDirection(new Vector2(0, wallCastHeight));
+        Ray wallRayLeft = new Ray(
+            wallCastOrigin,
+            transform.TransformDirection(Vector3.left) * wallCastDistance);
+        Ray wallRayRight = new Ray(
+            wallCastOrigin,
+            transform.TransformDirection(Vector3.right) * wallCastDistance);
+
+        RaycastHit2D leftWall = Physics2D.Raycast(
+            wallRayLeft.origin,
+            wallRayLeft.direction,
+            wallCastDistance, ground);
+        RaycastHit2D rightWall = Physics2D.Raycast(
+            wallRayRight.origin,
+            wallRayRight.direction,
+            wallCastDistance, ground);
+
+
+        Collider2D detectedGround = new Collider2D();
+        Collider2D detectedWall = new Collider2D();
+        switch (direction)
         {
-            Debug.DrawRay(leftEdgeRay.origin, leftEdgeRay.direction * EDGE_CAST_DEPTH, Color.green);
-            Debug.DrawRay(rightEdgeRay.origin, rightEdgeRay.direction * EDGE_CAST_DEPTH, Color.green);
+            case MoveDirection.Left:
+                detectedGround = leftEdge.collider;
+                detectedWall = leftWall.collider;
+
+                break;
+            case MoveDirection.Right:
+                detectedGround = rightEdge.collider;
+                detectedWall = rightWall.collider;
+                break;
         }
 
-        Collider2D detectedGround = _move.x > 0 ? rightEdgeCast.collider : leftEdgeCast.collider;
-        if (!detectedGround)
+        if (!detectedGround || detectedWall)
         {
             _rigidbody.velocity = Vector3.zero;
             return;
         }
 
-        transform.Translate(Vector3.right * (_move.x * (_moveSpeed * Time.deltaTime)), transform);
+        transform.Translate(Vector3.right * (_move.x * (moveSpeed * Time.deltaTime)), transform);
+
+        if (showDebug)
+        {
+            if (direction == MoveDirection.Left)
+            {
+                Debug.DrawRay(leftEdgeRay.origin, leftEdgeRay.direction * edgeCastDepth, Color.green);
+                Debug.DrawRay(wallRayLeft.origin, wallRayLeft.direction * wallCastDistance, Color.magenta);
+                debugDisc.transform.position = leftWall.point;
+            }
+
+            if (direction == MoveDirection.Right)
+            {
+                Debug.DrawRay(rightEdgeRay.origin, rightEdgeRay.direction * edgeCastDepth, Color.green);
+                Debug.DrawRay(wallRayRight.origin, wallRayRight.direction * wallCastDistance, Color.magenta);
+                debugDisc.transform.position = rightWall.point;
+            }
+        }
     }
 
-    private void FlipStuff()
+    private void VisualizeMirrorImage()
     {
-        if (_flipCollider.CanFlip)
+        if (flipCollider.CanFlip)
         {
             if (!previousFlippable)
             {
@@ -113,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
             UpdateMirrorPosition();
         }
-        else if (!_flipCollider.CanFlip)
+        else if (!flipCollider.CanFlip)
         {
             if (previousFlippable)
             {
@@ -122,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        previousFlippable = _flipCollider.CanFlip;
+        previousFlippable = flipCollider.CanFlip;
     }
 
     private void UpdateMirrorPosition()
@@ -147,14 +209,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (move.x == 0)
         {
-            animator.SetBool(walking, false);
-            flippedAnimator.SetBool(walking, false);
+            animator.SetBool(Walking, false);
+            flippedAnimator.SetBool(Walking, false);
             return;
         }
 
 
-        animator.SetBool(walking, true);
-        flippedAnimator.SetBool(walking, true);
+        animator.SetBool(Walking, true);
+        flippedAnimator.SetBool(Walking, true);
 
         Vector3 scale = animator.transform.localScale;
         if (move.x > 0)
@@ -169,48 +231,49 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void flip()
+    private void Flip()
     {
-        if (_flipCollider.CanFlip)
+        if (flipCollider.CanFlip)
         {
-            transform.RotateAround(transform.TransformPoint(_flipPivotPoint), 180);
+            transform.RotateAround(transform.TransformPoint(flipPivotPoint), Vector3.forward, 180);
         }
     }
 
-    private void FadeMirrorIn()
-    {
-        coroutine = StartCoroutine(FadeMirror(flipVisibleColor, 1f));
-    }
+    private void FadeMirrorIn() => coroutine = StartCoroutine(FadeMirror(flipVisibleColor, 1f));
 
-    private void FadeMirrorOut()
-    {
-        coroutine = StartCoroutine(FadeMirror(new Color(1, 1, 1, 0), 1f));
-    }
+    private void FadeMirrorOut() => coroutine = StartCoroutine(FadeMirror(new Color(1, 1, 1, 0), 1f));
 
     private IEnumerator FadeMirror(Color end, float time)
     {
         fadeRunning = true;
         float elapsedTime = 0;
 
-        SpriteRenderer[] renderers = flippedAnimator.transform.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] bodyPartRenderers = flippedAnimator.transform.GetComponentsInChildren<SpriteRenderer>();
 
         while (elapsedTime < time)
         {
-            foreach (SpriteRenderer renderer in renderers)
+            foreach (SpriteRenderer bodyPartRenderer in bodyPartRenderers)
             {
-                renderer.color = Color.Lerp(renderer.color, end, (elapsedTime / time));
+                bodyPartRenderer.color = Color.Lerp(bodyPartRenderer.color, end, (elapsedTime / time));
             }
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        foreach (SpriteRenderer renderer in renderers)
+        foreach (SpriteRenderer bodyPartRenderer in bodyPartRenderers)
         {
-            renderer.color = end;
+            bodyPartRenderer.color = end;
         }
 
         fadeRunning = false;
         yield return new WaitForEndOfFrame();
+    }
+
+    private enum MoveDirection
+    {
+        None,
+        Left,
+        Right
     }
 }
