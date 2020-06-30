@@ -18,7 +18,7 @@ public class NewPixiFlight : MonoBehaviour
     private Transform returnTarget;
 
     private bool following;
-    private Vector3 dampVelocity;
+    private Vector2 dampVelocity;
     private Camera camera;
 
 
@@ -102,7 +102,7 @@ public class NewPixiFlight : MonoBehaviour
     private Vector3 MouseToFlyTarget()
     {
         Vector3 target = camera.ScreenToWorldPoint(Input.mousePosition);
-        target = new Vector3(target.x, target.y, 0);
+        target = new Vector2(target.x, target.y);
         return target;
     }
 
@@ -139,7 +139,7 @@ public class NewPixiFlight : MonoBehaviour
     }
 
     private void Follow(Vector3 mousePos) =>
-        transform.position = Vector3.SmoothDamp(transform.position, mousePos, ref dampVelocity, .3f);
+        transform.position = Vector2.SmoothDamp(transform.position, mousePos, ref dampVelocity, .3f);
 
     private void Draw()
     {
