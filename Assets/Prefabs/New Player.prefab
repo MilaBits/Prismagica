@@ -77,7 +77,7 @@ MonoBehaviour:
   flipSpriteOffset: {fileID: 2905912705470108117}
   edgeCastWidth: 0.2
   edgeCastDepth: 0.3
-  wallCastDistance: 0.35
+  wallCastDistance: 0.2
   wallCastHeight: 0.45
   showDebug: 1
   debugDisc: {fileID: 0}

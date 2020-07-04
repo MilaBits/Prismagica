@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Mechanics;
 using Shapes;
 using UnityEngine;
@@ -137,13 +136,11 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-        if (!detectedGround || detectedWall)
+        if (detectedGround && !detectedWall)
         {
-            _rigidbody.velocity = Vector3.zero;
-            return;
+            transform.Translate(Vector3.right * (_move.x * (moveSpeed * Time.deltaTime)), transform);
         }
 
-        transform.Translate(Vector3.right * (_move.x * (moveSpeed * Time.deltaTime)), transform);
 
         if (showDebug)
         {

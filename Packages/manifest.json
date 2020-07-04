@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.acegikmo.shapes": "https://github.com/acegikmo/Shapes.git",
     "com.coffee.upm-git-extension": "https://github.com/mob-sakai/UpmGitExtension.git",
     "com.unity.2d.animation": "3.2.1",
     "com.unity.2d.sprite": "1.0.0",
@@ -56,10 +55,6 @@
     "com.coffee.upm-git-extension": {
       "revision": "HEAD",
       "hash": "3721ff96c879bb58373913e6cab3c6908ec04846"
-    },
-    "com.acegikmo.shapes": {
-      "revision": "HEAD",
-      "hash": "b1a6864779c7cac9464d3893ede9ed968a81c52d"
     }
   }
 }

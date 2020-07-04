@@ -1,0 +1,3 @@
+[submodule "Assets/Plugins/Shapes"]
+	path = Assets/Plugins/Shapes
+	url = https://github.com/acegikmo/Shapes.git
