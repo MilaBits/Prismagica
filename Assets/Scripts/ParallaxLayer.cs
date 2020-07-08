@@ -1,18 +1,15 @@
 using System;
 using UnityEngine;
 
-namespace UI
+[CreateAssetMenu(menuName = "Alchemage/ParallaxLayer")]
+[Serializable]
+public class ParallaxLayer : ScriptableObject
 {
-    [CreateAssetMenu(menuName = "Alchemage/ParallaxLayer")]
-    [Serializable]
-    public class ParallaxLayer : ScriptableObject
-    {
-        public float Speed;
+    public float Speed;
 
-        public Material Material;
+    public Material Material;
 
-        public MeshRenderer SceneObject;
+    public MeshRenderer SceneObject;
 
-        public Vector3 Offset;
-    }
+    public Vector3 Offset;
 }

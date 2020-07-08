@@ -14,6 +14,18 @@ public class GravityThing : MonoBehaviour
     [SerializeField]
     private float rotationAdjustmentSpeed = 5f;
 
+    private Vector2 gravity;
+
+    [SerializeField]
+    private float gravityPower = 9.8f;
+
+    private Rigidbody2D _rigidBody2D;
+
+    private void Awake()
+    {
+        _rigidBody2D = GetComponent<Rigidbody2D>();
+    }
+
     private void Update() => DoTheGravityThing();
 
     private void DoTheGravityThing()
@@ -45,13 +57,15 @@ public class GravityThing : MonoBehaviour
 
         if (groundCastLeft.collider != null && groundCastRight.collider != null)
         {
-            Physics2D.gravity = ((-groundCastRight.normal + -groundCastLeft.normal) * 0.5f) * 9.8f;
+            gravity = ((-groundCastRight.normal + -groundCastLeft.normal) * 0.5f) * gravityPower;
         }
 
         transform.rotation = Quaternion.Lerp(transform.rotation,
-            Quaternion.LookRotation(Vector3.forward, -Physics2D.gravity),
+            Quaternion.LookRotation(Vector3.forward, -gravity),
             Time.fixedDeltaTime * rotationAdjustmentSpeed);
 
-        if (showDebug) Debug.DrawRay(transform.position, Physics2D.gravity, Color.cyan);
+        _rigidBody2D.AddForce(gravity);
+
+        if (showDebug) Debug.DrawRay(transform.position, gravity, Color.cyan);
     }
 }

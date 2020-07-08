@@ -1,5 +1,4 @@
-﻿using System;
-using Shapes;
+﻿using Shapes;
 using UnityEngine;
 
 public class EnemyPathing : MonoBehaviour

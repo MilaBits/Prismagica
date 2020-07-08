@@ -1,35 +1,25 @@
 using UnityEngine;
 
-namespace Mechanics
+public class FlipCollider : MonoBehaviour
 {
-    public class FlipCollider : MonoBehaviour
+    [SerializeField]
+    private LayerMask collisions = default;
+
+    public bool CanFlip => _canFlip;
+    private bool _canFlip = true;
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        private CapsuleCollider flipCollider;
+        _canFlip = false;
+    }
 
-        [SerializeField]
-        private LayerMask collisions;
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        _canFlip = false;
+    }
 
-        public bool CanFlip => _canFlip;
-        private bool _canFlip = true;
-
-        private void Start()
-        {
-            flipCollider = GetComponent<CapsuleCollider>();
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            _canFlip = false;
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            _canFlip = false;
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            _canFlip = true;
-        }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        _canFlip = true;
     }
 }
