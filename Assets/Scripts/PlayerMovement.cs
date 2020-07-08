@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private bool previousFlippable;
     private Coroutine coroutine;
     private bool fadeRunning;
+    private Vector3 rotDampVel;
 
     private void Start()
     {
@@ -175,9 +176,10 @@ public class PlayerMovement : MonoBehaviour
         Transform flipSpriteTransform = flipSpriteOffset.transform;
         flipSpriteTransform.position = hit.point;
 
-        // rotate mirror image to stand on ground
-        flipSpriteOffset.up = flipSpriteOffset.position -
-                              (flipSpriteTransform.position + new Vector3(hit.normal.x, hit.normal.y));
+        flipSpriteOffset.up = Vector3.SmoothDamp(
+            flipSpriteOffset.up,
+            flipSpriteOffset.position - (flipSpriteTransform.position + new Vector3(hit.normal.x, hit.normal.y)),
+            ref rotDampVel, .1f);
 
         // update distance value for mirror fading
         flippedCharacter.distanceFromCharacter =
