@@ -81,7 +81,6 @@ public class NewPixiFlight : MonoBehaviour
         if (Input.GetButtonUp("Power"))
         {
             held = false;
-            Debug.Log("up: " + heldDuration);
             heldDuration = 0;
         }
 
