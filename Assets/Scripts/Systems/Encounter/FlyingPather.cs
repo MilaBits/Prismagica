@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Systems.Enemy
+namespace Systems.Encounter
 {
     public class FlyingPather : EnemyPather
     {

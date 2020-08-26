@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Systems.Enemy
+namespace Systems.Encounter
 {
     [CreateAssetMenu(fileName = "Enemy", menuName = "Prismagica/New Enemy", order = 0)]
-    public class Enemy : ScriptableObject
+    public class EnemyInfo : ScriptableObject
     {
-        public Sprite Sprite;
-
+        public GameObject AnimatedSprites;
     }
 }

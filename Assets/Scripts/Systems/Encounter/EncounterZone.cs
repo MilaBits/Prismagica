@@ -1,11 +1,15 @@
-﻿using Systems.Utilities;
+﻿using System.Collections;
+using Systems.Utilities;
 using Shapes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace Systems.Enemy
+namespace Systems.Encounter
 {
     public class EncounterZone : MonoBehaviour
     {
+        [SerializeField] private Encounter encounter;
+
         [SerializeField] private float detectionRadius;
         [SerializeField] private LayerMask targetLayer;
 
@@ -30,6 +34,21 @@ namespace Systems.Enemy
         private void StartEncounter(Collider2D other)
         {
             Debug.Log("*Final Fantasy 10 Battle Theme*\nDdu du duuu dududuud uduuuuu");
+            StartCoroutine(LoadBattleScene());
+        }
+
+        private IEnumerator LoadBattleScene()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+            Debug.Log("Ding");
+
+            //todo: Not clean, fix later
+            FindObjectOfType<EncounterManager>().Init(encounter);
         }
 
 #if UNITY_EDITOR

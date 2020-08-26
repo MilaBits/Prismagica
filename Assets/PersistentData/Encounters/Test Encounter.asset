@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Test Encounter
   m_EditorClassIdentifier: 
   Enemies:
-  - Position: {x: 0, y: 0}
-    Enemy: {fileID: 11400000, guid: 3fe30c3e9ef7cc54d94a288034579202, type: 2}
-  - Position: {x: 0, y: 0}
-    Enemy: {fileID: 0}
-  - Position: {x: 0, y: 0}
-    Enemy: {fileID: 0}
-  - Position: {x: 0, y: 0}
-    Enemy: {fileID: 0}
-  - Position: {x: 0, y: 0}
-    Enemy: {fileID: 0}
+  - Position: {x: 1, y: 1}
+    enemy: {fileID: 6768040945962832599, guid: 97d42d1d964a4014c910b8ffdf961293, type: 3}
+  - Position: {x: 2, y: 1}
+    enemy: {fileID: 6768040945962832599, guid: 97d42d1d964a4014c910b8ffdf961293, type: 3}
+  - Position: {x: 1, y: 2}
+    enemy: {fileID: 6768040945962832599, guid: a588a79e11666584194b97e794c52654, type: 3}
+  - Position: {x: 2, y: -2}
+    enemy: {fileID: 6768040945962832599, guid: a588a79e11666584194b97e794c52654, type: 3}
+  - Position: {x: 2, y: -1}
+    enemy: {fileID: 6768040945962832599, guid: 97d42d1d964a4014c910b8ffdf961293, type: 3}
+  - Position: {x: 3, y: 2}
+    enemy: {fileID: 6768040945962832599, guid: a588a79e11666584194b97e794c52654, type: 3}

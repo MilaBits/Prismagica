@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e162b914b1a64c16a2e2b9883dde1c70, type: 3}
-  m_Name: Angery Face
+  m_Name: Angery Pet
   m_EditorClassIdentifier: 
-  AnimatedSprites: {fileID: 3188133789582479091, guid: 2b41d1119a3bd794d92d0b7e12337f8e,
+  AnimatedSprites: {fileID: 8830318290016315735, guid: cf6f00fffe5b9524295faec97e8d5afc,
     type: 3}

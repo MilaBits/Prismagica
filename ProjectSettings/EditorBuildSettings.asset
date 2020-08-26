@@ -5,13 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/_Old/Old - Scenes/ParallaxScene.unity
-    guid: 5c903c7429479a142834e1e8ed9095aa
   - enabled: 1
-    path: Assets/_Old/Old - Scenes/Planetarium.unity
-    guid: 854198b47f463e14185f8f2e7a37a222
+    path: Assets/Scenes/Curve Scene.unity
+    guid: df7df53d86c977b49950d7d9dc5ba9b9
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: ed0658997cd91b3489b046074ce1428c
   m_configObjects: {}
