@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Systems.Enemy
 {
     [Serializable]
     public struct PositionedEnemy

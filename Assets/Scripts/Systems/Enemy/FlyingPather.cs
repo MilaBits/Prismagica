@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Systems.Enemy
 {
     public class FlyingPather : EnemyPather
     {

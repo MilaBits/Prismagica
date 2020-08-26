@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Systems.Enemy
 {
     [CreateAssetMenu(fileName = "Enemy", menuName = "Prismagica/New Enemy", order = 0)]
     public class Enemy : ScriptableObject

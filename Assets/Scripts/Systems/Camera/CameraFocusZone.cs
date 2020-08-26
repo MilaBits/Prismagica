@@ -1,26 +1,28 @@
 ﻿using UnityEngine;
 
-public class CameraFocusZone : MonoBehaviour
+namespace Systems.Camera
 {
-    private FollowCam followCam;
-
-    [SerializeField]
-    private CameraTarget cameraTarget = default;
-
-    private void Start()
+    public class CameraFocusZone : MonoBehaviour
     {
-        followCam = Camera.main.GetComponent<FollowCam>();
-    }
+        private FollowCam followCam;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        followCam.AddTarget(cameraTarget);
-    }
+        [SerializeField]
+        private CameraTarget cameraTarget = default;
 
-    private void OnTriggerExit(Collider other)
-    {
-        followCam.RemoveTarget(cameraTarget);
-    }
+        private void Start()
+        {
+            followCam = UnityEngine.Camera.main.GetComponent<FollowCam>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            followCam.AddTarget(cameraTarget);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            followCam.RemoveTarget(cameraTarget);
+        }
 
 //    private IEnumerator SmoothZoom(Transform target, float targetZoom, float time)
 //    {
@@ -45,4 +47,5 @@ public class CameraFocusZone : MonoBehaviour
 //
 //        yield return new WaitForEndOfFrame();
 //    }
+    }
 }
