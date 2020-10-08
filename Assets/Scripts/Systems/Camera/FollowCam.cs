@@ -6,30 +6,25 @@ namespace Systems.Camera
 {
     public class FollowCam : MonoBehaviour
     {
-        [SerializeField]
-        private Vector3 cameraOffset = default;
+        [SerializeField] private Vector3 cameraOffset = default;
 
-        [SerializeField]
-        private GameObject parallax = default;
+        [SerializeField] private GameObject parallax = default;
 
-        [SerializeField]
-        private float followSpeed = default;
+        [SerializeField] private float followSpeed = default;
 
-        [SerializeField]
-        private float rotationSpeed = default;
+        [SerializeField] private float rotationSpeed = default;
 
-        [SerializeField]
-        private float zoomDuration = default;
+        [SerializeField] private float zoomDuration = default;
 
-        [SerializeField]
-        private AnimationCurve zoomCurve = default;
+        [SerializeField] private AnimationCurve zoomCurve = default;
 
-        [SerializeField]
-        private List<CameraTarget> Targets = default;
+        [SerializeField] private List<CameraTarget> Targets = default;
 
         private UnityEngine.Camera cam;
 
         private Vector3 startPos;
+
+        public Transform MainTarget => Targets[0].target;
 
         private void Start()
         {

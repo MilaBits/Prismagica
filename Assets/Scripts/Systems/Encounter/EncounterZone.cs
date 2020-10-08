@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Systems.Utilities;
 using Shapes;
 using UnityEngine;
@@ -23,7 +24,6 @@ namespace Systems.Encounter
         private void OnDisable() =>
             GetComponentInChildren<TriggerForwarder>().enterEvent.RemoveListener(StartEncounter);
 
-
         void Update()
         {
             Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, targetLayer);
@@ -45,10 +45,6 @@ namespace Systems.Encounter
             {
                 yield return null;
             }
-            Debug.Log("Ding");
-
-            //todo: Not clean, fix later
-            FindObjectOfType<EncounterManager>().Init(encounter);
         }
 
 #if UNITY_EDITOR
