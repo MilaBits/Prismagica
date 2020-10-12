@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Curve Scene.unity
+    path: Assets/Game/Scenes/Curve Scene.unity
     guid: df7df53d86c977b49950d7d9dc5ba9b9
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
+    path: Assets/Game/Scenes/BattleScene.unity
     guid: ed0658997cd91b3489b046074ce1428c
   m_configObjects: {}

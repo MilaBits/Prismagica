@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 54d775af3fb58a048a04d9799b6e8205
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: "<?xml version=\"1.0\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD
+    SVG 20010904//EN\"\n \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n<svg
+    version=\"1.0\" xmlns=\"http://www.w3.org/2000/svg\"\n width=\"18.000000pt\"
+    height=\"18.000000pt\" viewBox=\"0 0 18.000000 18.000000\"\n preserveAspectRatio=\"xMidYMid
+    meet\">\n<metadata>\nCreated by potrace 1.16, written by Peter Selinger 2001-2019\n</metadata>\n<g
+    transform=\"translate(-1.000000,19.000000) scale(0.100000,-0.100000)\"\nfill=\"#000000\"
+    stroke=\"none\">\n<path d=\"M35 165 c-19 -18 -25 -35 -25 -65 0 -56 34 -90 90
+    -90 56 0 90 34 90\n90 0 56 -34 90 -90 90 -30 0 -47 -6 -65 -25z m85 -65 c0 -13
+    -7 -20 -20 -20\n-13 0 -20 7 -20 20 0 13 7 20 20 20 13 0 20 -7 20 -20z\"/>\n</g>\n</svg>\n"
+  assetBundleName: 
+  assetBundleVariant: 
