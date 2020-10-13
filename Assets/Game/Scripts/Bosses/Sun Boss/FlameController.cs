@@ -19,11 +19,21 @@ namespace Bosses.Sun_Boss
         private List<Flame> circleFlames = new List<Flame>();
 
         [SerializeField] private Queue<Flame> flamePool = new Queue<Flame>();
+        private ParticleSystem _particleSystem;
 
         [SerializeField] private List<FlameWave> Patterns = new List<FlameWave>();
+        private bool playing;
+
+        private void Awake()
+        {
+            _particleSystem = GetComponentInChildren<ParticleSystem>();
+        }
 
         public void PoolFlame(Flame flame)
         {
+            _particleSystem.transform.position = flame.transform.position;
+            _particleSystem.Play();
+            
             flame.gameObject.SetActive(false);
             flamePool.Enqueue(flame);
         }
@@ -42,7 +52,8 @@ namespace Bosses.Sun_Boss
             for (float angle = 0; angle < 360; angle += 360f / flameCount)
             {
                 float radians = angle * Mathf.Deg2Rad;
-                Flame flame = Instantiate(flamePrefab.gameObject, flameRing.transform).GetComponent<Flame>().Init(false, 0,this,0);
+                Flame flame = Instantiate(flamePrefab.gameObject, flameRing.transform).GetComponent<Flame>()
+                    .Init(false, 0, this, 0);
                 flame.transform.localPosition =
                     new Vector2((float) Math.Cos(radians), (float) Math.Sin(radians)) * flameRadius;
                 flame.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -62,8 +73,20 @@ namespace Bosses.Sun_Boss
             StartCoroutine(PlayPattern());
         }
 
+        public IEnumerator FireAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            Fire();
+        }
+
+        public void Fire()
+        {
+            if (!playing) StartCoroutine(PlayPattern());
+        }
+
         private IEnumerator PlayPattern()
         {
+            playing = true;
             foreach (FlameWave flameWave in Patterns)
             {
                 yield return new WaitForSeconds(flameWave.delay);
@@ -74,17 +97,16 @@ namespace Bosses.Sun_Boss
                         Flame flame = GetFlame();
                         flame.transform.position = circleFlames[i].transform.position;
                         flame.transform.rotation = circleFlames[i].transform.rotation;
-                        // StartCoroutine(PoolFlameDelayed(3f, flame));
                     }
                 }
             }
+
+            playing = false;
         }
 
         private void Update()
         {
             flameRing.transform.Rotate(new Vector3(0, 0, flameRotationSpeed * Time.deltaTime));
-
-            // if (fire)
         }
     }
 }

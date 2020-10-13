@@ -1,19 +1,37 @@
 ﻿using System.Collections;
+using Extensions;
 using Shapes;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Flameling : MonoBehaviour
 {
-    private Vector2 _originalPosition;
     [SerializeField] private float deviationRange;
+    private float _originalDeviationRange;
+
+    [SerializeField] private Transform followTarget;
+    private Vector2 _originalPosition;
+
+    [SerializeField] private float hoverSpeed = .75f;
+    private float _originalHoverSpeed;
+
     [SerializeField] private bool move;
-    private bool _running;
-    private bool _collectable = true;
     private Coroutine _playingCoroutine;
+    private bool _running;
+
+    private bool _collectable = true;
+
+    [SerializeField] private Material[] colors = new Material[3];
+
     public bool Collectable => _collectable;
 
-    private void Start() => _originalPosition = transform.position;
+    private void Start()
+    {
+        GetComponent<Renderer>().material = colors[Random.Range(0, 3)];
+        _originalPosition = transform.position;
+        _originalDeviationRange = deviationRange;
+        _originalHoverSpeed = hoverSpeed;
+    }
 
     private IEnumerator Hover()
     {
@@ -21,11 +39,19 @@ public class Flameling : MonoBehaviour
         while (move)
         {
             Vector2 start = transform.position;
-            Vector2 target = _originalPosition +
-                             new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized *
-                             Random.Range(0, deviationRange);
+            Vector2 target;
+            if (followTarget != null)
+            {
+                target = followTarget.position.AsVector2();
+            }
+            else
+                target = _originalPosition;
 
-            float duration = .75f;
+            target += new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized *
+                      Random.Range(0, deviationRange);
+
+
+            float duration = hoverSpeed;
             for (float elapsedTime = 0; elapsedTime < duration; elapsedTime += Time.deltaTime)
             {
                 transform.position = Vector3.LerpUnclamped(start, target, elapsedTime / duration);
@@ -36,11 +62,24 @@ public class Flameling : MonoBehaviour
         _running = false;
     }
 
+    public void SetHoverTarget(Transform target, float maxDeviation, float hoverSpeed)
+    {
+        followTarget = target;
+        deviationRange = maxDeviation;
+        this.hoverSpeed = hoverSpeed;
+    }
+
+    public void RemoveHoverTarget()
+    {
+        followTarget = null;
+        _originalPosition = transform.position;
+        deviationRange = _originalDeviationRange;
+        hoverSpeed = _originalHoverSpeed;
+    }
+
     public void MarkCollected()
     {
-        move = false;
         _collectable = false;
-        StopCoroutine(_playingCoroutine);
     }
 
     private void Update()
