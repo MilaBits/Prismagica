@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class SunBoss : MonoBehaviour
 {
-    [SerializeField] private Transform HealthCore;
+    [SerializeField] private Transform originalSunArt = default;
+    [SerializeField] private Transform HealthCore = default;
     private FlameController flameController;
 
     [SerializeField, VectorLabels("Max", "Current")]
-    private Vector2Int health;
+    private Vector2Int health = default;
 
-    [SerializeField] private AnimationCurve damageAnimationCurve;
+    [SerializeField] private AnimationCurve damageAnimationCurve = default;
 
 
     private void Awake() => flameController = GetComponent<FlameController>();
@@ -24,14 +25,36 @@ public class SunBoss : MonoBehaviour
     }
 
     [ContextMenu("Test Take Damage")]
-    public void TestTakeDamage() => TakeDamage(25);
+    public void TestTakeDamage() => TakeDamage(100);
 
     public void TakeDamage(int damage)
     {
-        int resultHealth = health.y - damage;
+        int resultHealth = Mathf.Clamp(health.y - damage, 0, 100);
         StartCoroutine(TakeDamageVisualEffect(health.y, resultHealth, 1f));
         health.y = resultHealth;
-        StartCoroutine(flameController.FireAfterDelay(1f));
+
+        if (health.y <= 0)
+        {
+            StartCoroutine(Death(1f, 5f));
+        }
+        else
+        {
+            StartCoroutine(flameController.FireAfterDelay(1f));
+        }
+    }
+
+    private IEnumerator Death(float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+        yield return StartCoroutine(TakeDamageVisualEffect(0, 300, duration * .75f));
+        originalSunArt.gameObject.SetActive(true);
+
+        gameObject.GetComponent<Renderer>().enabled = false;
+        flameController.flameRing.SetActive(false);
+        yield return StartCoroutine(TakeDamageVisualEffect(300, 0, duration * .25f));
+        gameObject.SetActive(false);
+        //gameObject.GetComponent<Renderer>().enabled = true;
+        //flameController.gameObject.SetActive(true);
     }
 
 

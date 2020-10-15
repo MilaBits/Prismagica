@@ -6,7 +6,7 @@ namespace Systems.Camera
 {
     public class FollowCam : MonoBehaviour
     {
-        [SerializeField] private Vector3 cameraOffset = default;
+        // [SerializeField] private Vector3 cameraOffset = default;
 
         [SerializeField] private GameObject parallax = default;
 
@@ -19,6 +19,8 @@ namespace Systems.Camera
         [SerializeField] private AnimationCurve zoomCurve = default;
 
         [SerializeField] private List<CameraTarget> Targets = default;
+        [SerializeField] private CameraTarget topTarget = default;
+        [SerializeField] private CameraTarget playerTarget = default;
 
         private UnityEngine.Camera cam;
 
@@ -40,26 +42,27 @@ namespace Systems.Camera
 
         private void UpdatePosition()
         {
-            CameraTarget target = Targets.OrderByDescending(t => t.priority).First();
+            CameraTarget currentTarget;
+            if (Targets.Count > 0)
+                currentTarget = playerTarget.priority > topTarget.priority ? playerTarget : topTarget;
+            else
+                currentTarget = playerTarget;
 
             // Zoom stuff
             float curvePercent = zoomCurve.Evaluate(Mathf.Clamp01(Time.deltaTime / zoomDuration));
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, target.zoomLevel, curvePercent);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, currentTarget.zoomLevel, curvePercent);
             parallax.transform.localScale = Vector3.Lerp(
                 parallax.transform.localScale,
-                new Vector3(target.zoomLevel, target.zoomLevel, 1),
+                new Vector3(currentTarget.zoomLevel, currentTarget.zoomLevel, 1),
                 curvePercent);
 
             Vector3 targetCamPos;
-            if (target.Interpolate)
-            {
-                targetCamPos = ((target.target.transform.position + Targets[0].target.transform.position) / 2) +
-                               transform.TransformDirection(cameraOffset);
-            }
+            if (currentTarget.Interpolate)
+                targetCamPos = ((currentTarget.target.transform.position + Targets[0].target.transform.position) / 2) +
+                               transform.TransformDirection(currentTarget.offset);
             else
-            {
-                targetCamPos = target.target.transform.position + transform.TransformDirection(cameraOffset);
-            }
+                targetCamPos = currentTarget.target.transform.position +
+                               transform.TransformDirection(currentTarget.offset);
 
             // Position stuff
             transform.position = Vector3.Lerp(
@@ -67,31 +70,51 @@ namespace Systems.Camera
                 targetCamPos, followSpeed * Time.deltaTime);
 
             // Rotation stuff
-            if (target.RotateWithPlayer) target = Targets.OrderByDescending(t => t.priority).Last();
-
-            transform.rotation = Quaternion.Lerp(
-                transform.rotation,
-                Quaternion.Euler(0, 0, target.target.transform.rotation.eulerAngles.z),
-                rotationSpeed * Time.deltaTime);
+            if (currentTarget.RotateWithPlayer)
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                    Quaternion.Euler(0, 0, playerTarget.target.transform.rotation.eulerAngles.z),
+                    rotationSpeed * Time.deltaTime);
+            else
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                    Quaternion.Euler(0, 0, currentTarget.target.transform.rotation.eulerAngles.z),
+                    rotationSpeed * Time.deltaTime);
         }
 
         [ContextMenu("Snap Camera")]
         private void SnapCam()
         {
-            CameraTarget target = Targets.OrderByDescending(t => t.priority).First();
+            CameraTarget target = GetTopTarget();
 
-            transform.position = target.target.transform.position + transform.TransformDirection(cameraOffset);
+            transform.position = target.target.transform.position + transform.TransformDirection(target.offset);
             transform.rotation = Quaternion.Euler(0, 0, target.target.transform.rotation.eulerAngles.z);
+        }
+
+        private CameraTarget GetTopTarget()
+        {
+            CameraTarget target;
+            if (Targets.Count > 0)
+            {
+                topTarget = Targets.OrderByDescending(t => t.priority).First();
+                target = playerTarget.priority > topTarget.priority ? playerTarget : topTarget;
+            }
+            else
+            {
+                target = playerTarget;
+            }
+
+            return target;
         }
 
         public void AddTarget(CameraTarget target)
         {
             Targets.Add(target);
+            topTarget = GetTopTarget();
         }
 
         public void RemoveTarget(CameraTarget target)
         {
             Targets.Remove(target);
+            topTarget = GetTopTarget();
         }
     }
 }

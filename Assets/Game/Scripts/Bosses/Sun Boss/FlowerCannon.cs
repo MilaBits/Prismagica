@@ -6,24 +6,19 @@ using UnityEngine;
 public class FlowerCannon : MonoBehaviour
 {
     [SerializeField, VectorLabels("Max", "Current")]
-    private Vector2Int power;
+    private Vector2Int power = default;
 
-    [Space]
-    [SerializeField] private Transform pivot;
-    [SerializeField] private SunBoss sun;
-    [SerializeField] private Transform laser;
-    [Space] [SerializeField] private Transform powerBall;
-    [SerializeField] private Vector2 maxScale;
-    [SerializeField] private AnimationCurve powerAddCurve;
+    [SerializeField] private SunBoss sun = default;
+    [SerializeField] private Transform laser = default;
+    [Space] [SerializeField] private Transform powerBall = default;
+    [SerializeField] private Vector2 maxScale = default;
+    [SerializeField] private AnimationCurve powerAddCurve = default;
 
     [Space] [SerializeField] private float drainCooldown = .1f;
     [SerializeField] private float passedTimeSinceDrain = 0;
     [SerializeField] private int drainAmount = 2;
     [Space] [SerializeField] private float idleTime = 1f;
     [SerializeField] private float idleTimePassed = 0;
-
-    [Space] [SerializeField] private TextMeshProUGUI text;
-
 
     private void Start() => powerBall.localScale = Vector3.zero;
 
@@ -42,13 +37,12 @@ public class FlowerCannon : MonoBehaviour
 
     private void Update()
     {
-        if (idleTimePassed > idleTime && power.y >= 15)
+        if (idleTimePassed > idleTime && power.y >= 15 && sun.isActiveAndEnabled)
         {
             StartCoroutine(Shoot());
             idleTimePassed = 0;
         }
 
-        text.text = power.y.ToString();
         idleTimePassed += Time.deltaTime;
         passedTimeSinceDrain += Time.deltaTime;
     }

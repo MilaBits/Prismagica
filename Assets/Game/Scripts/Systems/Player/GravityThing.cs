@@ -4,22 +4,17 @@ namespace Systems.Player
 {
     public class GravityThing : MonoBehaviour
     {
-        [SerializeField]
-        private bool showDebug;
+        [SerializeField] private bool showDebug = default;
 
-        [SerializeField]
-        public LayerMask ground = default;
+        [SerializeField] public LayerMask ground = default;
 
-        [SerializeField]
-        private float floorCheckWidth = default;
+        [SerializeField] private float floorCheckWidth = default;
 
-        [SerializeField]
-        private float rotationAdjustmentSpeed = 5f;
+        [SerializeField] private float rotationAdjustmentSpeed = 5f;
 
         private Vector2 gravity;
 
-        [SerializeField]
-        private float gravityPower = 9.8f;
+        [SerializeField] private float gravityPower = 9.8f;
 
         private Rigidbody2D _rigidBody2D;
 

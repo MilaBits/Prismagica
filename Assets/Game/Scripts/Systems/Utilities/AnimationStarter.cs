@@ -4,7 +4,7 @@ namespace Systems.Utilities
 {
     public class AnimationStarter : MonoBehaviour
     {
-        [SerializeField] private bool randomStartFrame;
+        [SerializeField] private bool randomStartFrame = default;
 
         void Start()
         {

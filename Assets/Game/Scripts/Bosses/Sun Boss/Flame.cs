@@ -8,20 +8,20 @@ namespace Bosses.Sun_Boss
         [SerializeField] private bool move = false;
         [SerializeField] private float speed = 5f;
         private FlameController controller;
-        [Header("Lifetime")] [SerializeField] private float lifetime;
-        [SerializeField] private float timeLived;
-        [SerializeField] private LayerMask hitMask;
+        [Header("Lifetime")] [SerializeField] private float lifetime = default;
+        [SerializeField] private float timeLived = default;
+        [SerializeField] private LayerMask hitMask = default;
 
-        [Header("Flameling")] [SerializeField] private float flamelingChance;
-        [SerializeField] private GameObject flameling;
-        private Renderer renderer;
-        private Rigidbody2D rigidbody;
+        [Header("Flameling")] [SerializeField] private float flamelingChance = default;
+        [SerializeField] private GameObject flameling = default;
+        private Renderer flameRenderer;
+        private Rigidbody2D rb;
 
         private void Awake()
         {
-            renderer = GetComponent<Renderer>();
-            rigidbody = GetComponent<Rigidbody2D>();
-            rigidbody.useFullKinematicContacts = true;
+            flameRenderer = GetComponent<Renderer>();
+            rb = GetComponent<Rigidbody2D>();
+            rb.useFullKinematicContacts = true;
         }
 
         public Flame Init(bool move, float speed, FlameController controller, float lifeTime)
@@ -55,8 +55,8 @@ namespace Bosses.Sun_Boss
             if (move)
             {
                 // transform.Translate(Vector2.right * (speed * Time.deltaTime), Space.Self);
-                rigidbody.MovePosition(transform.position +
-                                       transform.TransformDirection(Vector2.right * (speed * Time.deltaTime)));
+                rb.MovePosition(transform.position +
+                                transform.TransformDirection(Vector2.right * (speed * Time.deltaTime)));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Bosses.Sun_Boss
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (renderer.isVisible && hitMask == (hitMask | (1 << collision.gameObject.layer)))
+            if (flameRenderer.isVisible && hitMask == (hitMask | (1 << collision.gameObject.layer)))
             {
                 SpawnFlameling();
                 controller.PoolFlame(this);

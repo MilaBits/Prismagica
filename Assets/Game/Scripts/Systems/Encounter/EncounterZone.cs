@@ -9,12 +9,10 @@ namespace Systems.Encounter
 {
     public class EncounterZone : MonoBehaviour
     {
-        [SerializeField] private Encounter encounter;
+        [SerializeField] private float detectionRadius = default;
+        [SerializeField] private LayerMask targetLayer = default;
 
-        [SerializeField] private float detectionRadius;
-        [SerializeField] private LayerMask targetLayer;
-
-        [SerializeField] private EnemyPather Pather;
+        [SerializeField] private EnemyPather Pather = default;
         [SerializeField] private float chaseSpeed = .1f;
 
         void Awake() => Pather.Init(chaseSpeed, transform.position);

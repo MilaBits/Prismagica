@@ -5,46 +5,33 @@ namespace Systems.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField]
-        private float moveSpeed;
+        [SerializeField] private float moveSpeed = default;
 
-        [SerializeField]
-        public LayerMask ground = default;
+        [SerializeField] public LayerMask ground = default;
 
-        [Header("References")]
-        [SerializeField]
+        [Header("References")] [SerializeField]
         private Animator animator = default;
 
-        [SerializeField]
-        private FlipCollider flipCollider;
+        [SerializeField] private FlipCollider flipCollider = default;
 
         private Vector3 flipPivotPoint = default;
 
-        [SerializeField]
-        private Transform flipSpriteOffset = default;
+        [SerializeField] private Transform flipSpriteOffset = default;
 
-        [SerializeField]
-        private FlippedCharacter flippedCharacter = default;
+        [SerializeField] private FlippedCharacter flippedCharacter = default;
 
-        [Header("Move Detection")]
-        [SerializeField]
+        [Header("Move Detection")] [SerializeField]
         private float edgeCastWidth = .15f;
 
-        [SerializeField]
-        private float edgeCastDepth = .3f;
+        [SerializeField] private float edgeCastDepth = .3f;
 
-        [SerializeField]
-        private float wallCastDistance = .21f;
+        [SerializeField] private float wallCastDistance = .21f;
 
-        [SerializeField]
-        private float wallCastHeight = .45f;
+        [SerializeField] private float wallCastHeight = .45f;
 
-        [SerializeField]
-        private float maxFlipDistance = .2f;
+        [SerializeField] private float maxFlipDistance = .2f;
 
-        [Header("Debug")]
-        [SerializeField]
-        private bool showDebug;
+        [Header("Debug")] [SerializeField] private bool showDebug = default;
 
         private Disc debugDisc;
 

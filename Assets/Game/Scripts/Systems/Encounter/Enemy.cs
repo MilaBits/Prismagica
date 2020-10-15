@@ -5,7 +5,7 @@ namespace Systems.Encounter
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private EnemyInfo info;
+        [SerializeField] private EnemyInfo info = default;
 
         private void Start() => Instantiate(info.AnimatedSprites, transform);
     }

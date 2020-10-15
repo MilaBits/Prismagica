@@ -5,9 +5,6 @@ namespace Systems.Player
 {
     public class MirrorFadeCollider : MonoBehaviour
     {
-        [SerializeField]
-        private LayerMask collisions = default;
-
         public float colliderDistance;
 
         private void OnTriggerEnter2D(Collider2D other) => colliderDistance =

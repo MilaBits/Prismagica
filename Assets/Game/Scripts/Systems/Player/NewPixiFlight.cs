@@ -10,22 +10,13 @@ namespace Systems.Player
     {
         private MoveMode moveMode = MoveMode.Follow;
 
-        [SerializeField]
-        private float speed;
-
-        [SerializeField]
-        private Transform returnTarget;
-
         private bool following;
         private Vector2 dampVelocity;
-        private UnityEngine.Camera camera;
+        private UnityEngine.Camera cam;
 
+        [SerializeField] private float launchMultiplier = 2;
 
-        [SerializeField]
-        private float launchMultiplier = 2;
-
-        [SerializeField]
-        private AnimationCurve launchCurve;
+        [SerializeField] private AnimationCurve launchCurve = default;
 
         private Vector3 launchPivot;
         private bool held;
@@ -38,11 +29,9 @@ namespace Systems.Player
         private Line pullLine;
         private Disc pivotDisc;
 
-        private float pivotLineWidth = .1f;
-
         void Start()
         {
-            camera = UnityEngine.Camera.main;
+            cam = UnityEngine.Camera.main;
 
             pivotDisc = Instantiate(new GameObject("Shapes Disc")).AddComponent<Disc>();
             pullLine = Instantiate(new GameObject("Shapes Line")).AddComponent<Line>();
@@ -99,7 +88,7 @@ namespace Systems.Player
 
         private Vector3 MouseToFlyTarget()
         {
-            Vector3 target = camera.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 target = cam.ScreenToWorldPoint(Input.mousePosition);
             target = new Vector2(target.x, target.y);
             return target;
         }

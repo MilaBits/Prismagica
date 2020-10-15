@@ -6,16 +6,16 @@ using Random = UnityEngine.Random;
 
 public class Flameling : MonoBehaviour
 {
-    [SerializeField] private float deviationRange;
+    [SerializeField] private float deviationRange = default;
     private float _originalDeviationRange;
 
-    [SerializeField] private Transform followTarget;
+    [SerializeField] private Transform followTarget = default;
     private Vector2 _originalPosition;
 
     [SerializeField] private float hoverSpeed = .75f;
     private float _originalHoverSpeed;
 
-    [SerializeField] private bool move;
+    [SerializeField] private bool move = default;
     private Coroutine _playingCoroutine;
     private bool _running;
 

@@ -7,9 +7,9 @@ namespace Systems.Encounter
 {
     public class EncounterManager : MonoBehaviour
     {
-        [SerializeField] private Encounter encounter;
-        [SerializeField] private Vector2 gridOffset;
-        [SerializeField] private Vector2 gridSpacing;
+        [SerializeField] private Encounter encounter = default;
+        [SerializeField] private Vector2 gridOffset = default;
+        [SerializeField] private Vector2 gridSpacing = default;
         [SerializeField] private float floorOffset = .1f;
 
         [SerializeField] private List<Enemy> enemies = new List<Enemy>();

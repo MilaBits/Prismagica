@@ -8,11 +8,9 @@ namespace Systems.Player
         private Coroutine coroutine;
         private bool fadeRunning;
 
-        [SerializeField]
-        private Animator animator;
+        [SerializeField] private Animator animator = default;
 
-        [SerializeField]
-        private Color flipVisibleColor;
+        [SerializeField] private Color flipVisibleColor = default;
 
         private float horizontalFlipScale;
 
@@ -28,8 +26,7 @@ namespace Systems.Player
 
         private SpriteRenderer[] bodyPartRenderers;
 
-        [SerializeField]
-        private MirrorFadeCollider circleFadeCollider;
+        [SerializeField] private MirrorFadeCollider circleFadeCollider = default;
 
         private void Start()
         {

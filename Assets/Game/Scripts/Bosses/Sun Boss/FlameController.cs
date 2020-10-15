@@ -7,14 +7,14 @@ namespace Bosses.Sun_Boss
 {
     public class FlameController : MonoBehaviour
     {
-        [SerializeField] private Flame flamePrefab;
-        private GameObject flameRing;
+        [SerializeField] private Flame flamePrefab = default;
+        public GameObject flameRing;
         private GameObject flamePoolObject;
 
-        [SerializeField] private float flameRadius;
-        [SerializeField] private int flameCount;
-        [SerializeField] private float flameSpeed;
-        [SerializeField, Range(-20, 20)] private float flameRotationSpeed;
+        [SerializeField] private float flameRadius = default;
+        [SerializeField] private int flameCount = default;
+        [SerializeField] private float flameSpeed = default;
+        [SerializeField, Range(-20, 20)] private float flameRotationSpeed = default;
 
         private List<Flame> circleFlames = new List<Flame>();
 
@@ -33,7 +33,7 @@ namespace Bosses.Sun_Boss
         {
             _particleSystem.transform.position = flame.transform.position;
             _particleSystem.Play();
-            
+
             flame.gameObject.SetActive(false);
             flamePool.Enqueue(flame);
         }
