@@ -1,5 +1,4 @@
-﻿using System;
-using Systems;
+﻿using Systems;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,20 +22,10 @@ public class PlayerHealth : MonoBehaviour
             int cachedHealth = Health.y;
 
             Health.y -= Mathf.Clamp(other.gameObject.GetComponent<Damager>().Damage, 0, Health.x);
- 
+
             //TODO: Add visual feedback to health loss other than losing a petal (screen flash/shake or something)
-            
+
             if (Health.y != cachedHealth) HealthChanged.Invoke(Health.y);
-
-            if (Health.y <= 0)
-            {
-                Death();
-            }
         }
-    }
-
-    private void Death()
-    {
-        throw new NotImplementedException();
     }
 }
