@@ -76,7 +76,7 @@ MonoBehaviour:
   edgeCastDepth: 0.3
   wallCastDistance: 0.2
   wallCastHeight: 0.45
-  maxFlipDistance: 0.3
+  maxFlipDistance: 0.45
   showDebug: 1
 --- !u!114 &2905912705101539874
 MonoBehaviour:
@@ -162,8 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d407f9fe0cf9da4a85b422df4cee96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  returnTarget: {fileID: 0}
   launchMultiplier: 2
   launchCurve:
     serializedVersion: 2
@@ -971,9 +969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89c9d948dc73e84f9d10442fcac1938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisions:
-    serializedVersion: 2
-    m_Bits: 512
   colliderDistance: 0
 --- !u!114 &1964659250
 MonoBehaviour:

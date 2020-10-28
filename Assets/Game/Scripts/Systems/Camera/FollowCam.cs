@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using Game.Scripts.Systems.RuntimeSet;
 using UnityEngine;
 
 namespace Systems.Camera
@@ -9,28 +12,37 @@ namespace Systems.Camera
         // [SerializeField] private Vector3 cameraOffset = default;
 
         [SerializeField] private GameObject parallax = default;
-
         [SerializeField] private float followSpeed = default;
-
         [SerializeField] private float rotationSpeed = default;
-
         [SerializeField] private float zoomDuration = default;
-
         [SerializeField] private AnimationCurve zoomCurve = default;
-
-        [SerializeField] private List<CameraTarget> Targets = default;
         [SerializeField] private CameraTarget topTarget = default;
         [SerializeField] private CameraTarget playerTarget = default;
-
+        [SerializeField] private GameObjectRuntimeSet PlayerRuntimeSet = default;
+        [SerializeField] private CameraTargetRuntimeSet CameraTargetRuntimeSet = default;
         private UnityEngine.Camera cam;
-
         private Vector3 startPos;
 
-        public Transform MainTarget => Targets[0].target;
+        public Transform MainTarget => CameraTargetRuntimeSet.GetItemAtIndex(0).target;
 
         private void Start()
         {
+            CameraTargetRuntimeSet.Initialize();
             cam = GetComponent<UnityEngine.Camera>();
+            StartCoroutine(WaitForPlayer());
+        }
+
+        private void OnEnable() => CameraTargetRuntimeSet.ItemsChanged.AddListener(delegate { GetTopTarget(); });
+        private void OnDisable() => CameraTargetRuntimeSet.ItemsChanged.RemoveListener(delegate { GetTopTarget(); });
+
+        private IEnumerator WaitForPlayer()
+        {
+            while (!playerTarget.target)
+            {
+                yield return new WaitForSeconds(.05f);
+                playerTarget.target = PlayerRuntimeSet.GetItemAtIndex(0).transform;
+            }
+
             SnapCam();
         }
 
@@ -43,7 +55,7 @@ namespace Systems.Camera
         private void UpdatePosition()
         {
             CameraTarget currentTarget;
-            if (Targets.Count > 0)
+            if (CameraTargetRuntimeSet.Count > 0)
                 currentTarget = playerTarget.priority > topTarget.priority ? playerTarget : topTarget;
             else
                 currentTarget = playerTarget;
@@ -58,7 +70,8 @@ namespace Systems.Camera
 
             Vector3 targetCamPos;
             if (currentTarget.Interpolate)
-                targetCamPos = ((currentTarget.target.transform.position + Targets[0].target.transform.position) / 2) +
+                targetCamPos = ((currentTarget.target.transform.position +
+                                 CameraTargetRuntimeSet.GetItemAtIndex(0).target.transform.position) / 2) +
                                transform.TransformDirection(currentTarget.offset);
             else
                 targetCamPos = currentTarget.target.transform.position +
@@ -92,9 +105,9 @@ namespace Systems.Camera
         private CameraTarget GetTopTarget()
         {
             CameraTarget target;
-            if (Targets.Count > 0)
+            if (CameraTargetRuntimeSet.Count > 0)
             {
-                topTarget = Targets.OrderByDescending(t => t.priority).First();
+                topTarget = CameraTargetRuntimeSet.GetItemAtIndex(0);
                 target = playerTarget.priority > topTarget.priority ? playerTarget : topTarget;
             }
             else
@@ -103,18 +116,6 @@ namespace Systems.Camera
             }
 
             return target;
-        }
-
-        public void AddTarget(CameraTarget target)
-        {
-            Targets.Add(target);
-            topTarget = GetTopTarget();
-        }
-
-        public void RemoveTarget(CameraTarget target)
-        {
-            Targets.Remove(target);
-            topTarget = GetTopTarget();
         }
     }
 }

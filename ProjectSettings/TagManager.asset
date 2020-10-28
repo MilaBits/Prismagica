@@ -7,6 +7,7 @@ TagManager:
   - Flameling
   - Pixi
   - Hurts
+  - Collectable
   layers:
   - Default
   - TransparentFX

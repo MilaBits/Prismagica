@@ -10,6 +10,7 @@ namespace Systems.Camera
         public float zoomLevel;
         public int priority;
         public Vector3 offset = new Vector3(0, 0, -10);
+        public Vector3 up = new Vector3(0, 1, 0);
         public bool RotateWithPlayer;
         public bool Interpolate;
     }

@@ -1,27 +1,21 @@
-﻿using Systems.Player;
+﻿using Game.Scripts.Systems.RuntimeSet;
 using UnityEngine;
 
 namespace Systems.Camera
 {
     public class CameraFocusZone : MonoBehaviour
     {
-        private FollowCam followCam;
-
+        [SerializeField] private CameraTargetRuntimeSet cameraTargetRuntimeSet = default;
         [SerializeField] private CameraTarget cameraTarget = default;
-
-        private void Start()
-        {
-            followCam = UnityEngine.Camera.main.GetComponent<FollowCam>();
-        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Player") followCam.AddTarget(cameraTarget);
+            if (other.tag == "Player") cameraTargetRuntimeSet.AddToSet(cameraTarget);
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.tag == "Player") followCam.RemoveTarget(cameraTarget);
+            if (other.tag == "Player") cameraTargetRuntimeSet.RemoveFromSet(cameraTarget);
         }
     }
 }
