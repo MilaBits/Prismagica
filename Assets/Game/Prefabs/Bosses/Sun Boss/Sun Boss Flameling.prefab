@@ -211,6 +211,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 52b70aae55e88b64d989100c91b9c5da, type: 2}
   - {fileID: 2100000, guid: cc734f9942b809f43bcbb0c26042ab7a, type: 2}
   - {fileID: 2100000, guid: c890328846c6d4f41babd2dc3d71dc72, type: 2}
+  speedRange: {x: 1, y: 2}
+  targetPosInterval: 1
 --- !u!199 &8275060163426632677
 ParticleSystemRenderer:
   serializedVersion: 6

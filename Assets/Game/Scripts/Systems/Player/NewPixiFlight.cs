@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Enums;
+using Flask;
 using Shapes;
 using UnityEngine;
 
@@ -28,6 +29,10 @@ namespace Systems.Player
         private Line targetLine;
         private Line pullLine;
         private Disc pivotDisc;
+
+        private DTweenVector2 _position;
+        [SerializeField]
+        private float followStrength = 5;
 
         void Start()
         {
@@ -58,6 +63,10 @@ namespace Systems.Player
             targetLine.Color = Color.white;
             pullLine.Color = Color.gray;
             pivotDisc.Color = Color.white;
+
+            _position = new DTweenVector2(transform.position, followStrength);
+            
+            transform.SetParent(null);
         }
 
         void Update()
@@ -68,7 +77,7 @@ namespace Systems.Player
             {
                 held = true;
             }
-
+            
             if (Input.GetButtonUp("Power"))
             {
                 held = false;
@@ -77,10 +86,11 @@ namespace Systems.Player
 
             if (held) heldDuration += Time.deltaTime;
 
-            if (heldDuration > .2f && moveMode != MoveMode.Launch)
+            if (heldDuration > .05f && moveMode != MoveMode.Launch)
             {
                 StartCoroutine(Launch(target));
             }
+            
 
             if (moveMode != MoveMode.None) Follow(target);
             Draw();
@@ -122,11 +132,19 @@ namespace Systems.Player
 
             // Return to normal
             yield return new WaitForSeconds(.2f);
+            _position = new DTweenVector2(transform.position, followStrength);
             moveMode = MoveMode.Follow;
         }
 
-        private void Follow(Vector3 mousePos) =>
-            transform.position = Vector2.SmoothDamp(transform.position, mousePos, ref dampVelocity, .3f);
+        private void Follow(Vector3 mousePos)
+        {
+            
+            _position.omega = followStrength;
+            _position.Step(mousePos);
+            transform.position = _position.position;
+            
+            // transform.position = Vector2.SmoothDamp(transform.position, mousePos, ref dampVelocity, .3f);
+        }
 
         private void Draw()
         {

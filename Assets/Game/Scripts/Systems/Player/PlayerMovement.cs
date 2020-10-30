@@ -6,29 +6,22 @@ namespace Systems.Player
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = default;
-
         [SerializeField] public LayerMask ground = default;
 
         [Header("References")] [SerializeField]
         private Animator animator = default;
 
         [SerializeField] private FlipCollider flipCollider = default;
-
         private Vector3 flipPivotPoint = default;
-
         [SerializeField] private Transform flipSpriteOffset = default;
-
         [SerializeField] private FlippedCharacter flippedCharacter = default;
 
         [Header("Move Detection")] [SerializeField]
         private float edgeCastWidth = .15f;
 
         [SerializeField] private float edgeCastDepth = .3f;
-
         [SerializeField] private float wallCastDistance = .21f;
-
         [SerializeField] private float wallCastHeight = .45f;
-
         [SerializeField] private float maxFlipDistance = .2f;
 
         [Header("Debug")] [SerializeField] private bool showDebug = default;
@@ -43,6 +36,8 @@ namespace Systems.Player
         private bool fadeRunning;
         private Vector3 rotDampVel;
 
+        private bool flippedWhileMoving;
+
         private void Start()
         {
             debugDisc = Instantiate(new GameObject("debugDisk"), transform).AddComponent<Disc>();
@@ -56,6 +51,8 @@ namespace Systems.Player
 
         private void Update()
         {
+            if (Input.GetAxis("Horizontal") == 0) flippedWhileMoving = false;
+
             if (Input.GetButtonDown("Flip")) Flip();
             MoveDirection moveDirection = Move();
 
@@ -68,6 +65,7 @@ namespace Systems.Player
         MoveDirection Move()
         {
             _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if (flippedWhileMoving) _move = new Vector2(-_move.x, _move.y);
 
             MoveDirection direction = MoveDirection.None;
             if (_move.x != 0) direction = _move.x > 0 ? MoveDirection.Right : MoveDirection.Left;
@@ -196,7 +194,10 @@ namespace Systems.Player
         private void Flip()
         {
             if (flipCollider.CanFlip && flippedCharacter.distanceFromCharacter < maxFlipDistance)
+            {
+                if (Input.GetAxis("Horizontal") != 0) flippedWhileMoving = !flippedWhileMoving;
                 transform.RotateAround(transform.TransformPoint(flipPivotPoint), Vector3.forward, 180);
+            }
         }
     }
 }

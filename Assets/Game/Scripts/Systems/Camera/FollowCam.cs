@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
+using Flask;
 using Game.Scripts.Systems.RuntimeSet;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace Systems.Camera
@@ -11,17 +11,28 @@ namespace Systems.Camera
     {
         // [SerializeField] private Vector3 cameraOffset = default;
 
-        [SerializeField] private GameObject parallax = default;
-        [SerializeField] private float followSpeed = default;
-        [SerializeField] private float rotationSpeed = default;
-        [SerializeField] private float zoomDuration = default;
-        [SerializeField] private AnimationCurve zoomCurve = default;
-        [SerializeField] private CameraTarget topTarget = default;
-        [SerializeField] private CameraTarget playerTarget = default;
-        [SerializeField] private GameObjectRuntimeSet PlayerRuntimeSet = default;
+        [Header("References")] [SerializeField]
+        private GameObject parallax = default;
+
+        private CameraTarget topTarget = default;
+
+        [Space] [SerializeField] private GameObjectRuntimeSet PlayerRuntimeSet = default;
         [SerializeField] private CameraTargetRuntimeSet CameraTargetRuntimeSet = default;
         private UnityEngine.Camera cam;
         private Vector3 startPos;
+
+        [Header("Settings")] [SerializeField] private float followOmega = 1;
+        [SerializeField] private float zoomOmega = 1;
+        [SerializeField] private float rotationOmega = 1;
+
+        [Space] [SerializeField] private float flipDelay = 1f;
+        private float flipTime;
+        [Space] [SerializeField] private CameraTarget playerTarget = default;
+
+
+        private DTween _zoom = new DTween(1, 1);
+        private DTweenVector3 _position = new DTweenVector3(Vector3.zero, 1);
+        private DTweenQuaternion _rotation = new DTweenQuaternion(quaternion.identity, 1);
 
         public Transform MainTarget => CameraTargetRuntimeSet.GetItemAtIndex(0).target;
 
@@ -29,31 +40,29 @@ namespace Systems.Camera
         {
             CameraTargetRuntimeSet.Initialize();
             cam = GetComponent<UnityEngine.Camera>();
-            StartCoroutine(WaitForPlayer());
+
+            SnapCam();
         }
 
         private void OnEnable() => CameraTargetRuntimeSet.ItemsChanged.AddListener(delegate { GetTopTarget(); });
         private void OnDisable() => CameraTargetRuntimeSet.ItemsChanged.RemoveListener(delegate { GetTopTarget(); });
 
-        private IEnumerator WaitForPlayer()
-        {
-            while (!playerTarget.target)
-            {
-                yield return new WaitForSeconds(.05f);
-                playerTarget.target = PlayerRuntimeSet.GetItemAtIndex(0).transform;
-            }
-
-            SnapCam();
-        }
-
         private void Update()
         {
+            if (Input.GetButton("Flip"))
+            {
+                flipTime = 0;
+            }
+
+            flipTime += Time.deltaTime;
+
             UpdatePosition();
             transform.GetChild(0).localScale = new Vector3(cam.orthographicSize * .5f, cam.orthographicSize * .5f, 1);
         }
 
         private void UpdatePosition()
         {
+            // Determine target
             CameraTarget currentTarget;
             if (CameraTargetRuntimeSet.Count > 0)
                 currentTarget = playerTarget.priority > topTarget.priority ? playerTarget : topTarget;
@@ -61,14 +70,12 @@ namespace Systems.Camera
                 currentTarget = playerTarget;
 
             // Zoom stuff
-            float curvePercent = zoomCurve.Evaluate(Mathf.Clamp01(Time.deltaTime / zoomDuration));
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, currentTarget.zoomLevel, curvePercent);
-            parallax.transform.localScale = Vector3.Lerp(
-                parallax.transform.localScale,
-                new Vector3(currentTarget.zoomLevel, currentTarget.zoomLevel, 1),
-                curvePercent);
+            _zoom.omega = zoomOmega;
+            _zoom.Step(currentTarget.zoomLevel);
+            cam.orthographicSize = _zoom;
 
             Vector3 targetCamPos;
+
             if (currentTarget.Interpolate)
                 targetCamPos = ((currentTarget.target.transform.position +
                                  CameraTargetRuntimeSet.GetItemAtIndex(0).target.transform.position) / 2) +
@@ -78,19 +85,21 @@ namespace Systems.Camera
                                transform.TransformDirection(currentTarget.offset);
 
             // Position stuff
-            transform.position = Vector3.Lerp(
-                transform.position,
-                targetCamPos, followSpeed * Time.deltaTime);
+            _position.omega = followOmega;
+            _position.Step(targetCamPos);
+            transform.position = _position;
 
             // Rotation stuff
-            if (currentTarget.RotateWithPlayer)
-                transform.rotation = Quaternion.Lerp(transform.rotation,
-                    Quaternion.Euler(0, 0, playerTarget.target.transform.rotation.eulerAngles.z),
-                    rotationSpeed * Time.deltaTime);
-            else
-                transform.rotation = Quaternion.Lerp(transform.rotation,
-                    Quaternion.Euler(0, 0, currentTarget.target.transform.rotation.eulerAngles.z),
-                    rotationSpeed * Time.deltaTime);
+            if (flipTime > flipDelay)
+            {
+                quaternion targetRotation = currentTarget.RotateWithPlayer
+                    ? playerTarget.target.transform.rotation
+                    : currentTarget.target.transform.rotation;
+
+                _rotation.omega = rotationOmega;
+                _rotation.Step(targetRotation);
+                transform.rotation = _rotation;
+            }
         }
 
         [ContextMenu("Snap Camera")]
@@ -100,6 +109,10 @@ namespace Systems.Camera
 
             transform.position = target.target.transform.position + transform.TransformDirection(target.offset);
             transform.rotation = Quaternion.Euler(0, 0, target.target.transform.rotation.eulerAngles.z);
+
+            _zoom = new DTween(target.zoomLevel, 1);
+            _position = new DTweenVector3(transform.position, 1);
+            _rotation = new DTweenQuaternion(transform.rotation, 1);
         }
 
         private CameraTarget GetTopTarget()

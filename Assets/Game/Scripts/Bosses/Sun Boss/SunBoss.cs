@@ -1,46 +1,53 @@
-﻿using System.Collections;
-using Systems;
+﻿using System;
+using System.Collections;
 using Bosses.Sun_Boss;
+using Game.Scripts.Systems.HealthSystem;
 using UnityEngine;
 
 public class SunBoss : MonoBehaviour
 {
-    [SerializeField] private Transform originalSunArt = default;
+    [Header("References")] [SerializeField]
+    private Transform originalSunArt = default;
+
     [SerializeField] private Transform HealthCore = default;
+    [SerializeField] private Health _health = default;
+
     private FlameController flameController;
+    [Header("Settings")] [SerializeField] private AnimationCurve damageAnimationCurve = default;
 
-    [SerializeField, VectorLabels("Max", "Current")]
-    private Vector2Int health = default;
+    private int lastHealth;
 
-    [SerializeField] private AnimationCurve damageAnimationCurve = default;
-
-
-    private void Awake() => flameController = GetComponent<FlameController>();
+    private void Awake()
+    {
+        flameController = GetComponent<FlameController>();
+    }
 
     private void OnEnable()
     {
-        health.y = health.x;
+        _health.Death.AddListener(delegate { StartCoroutine(Death(1f, 5f)); });
+        _health.HealthChanged.AddListener(delegate(int damage) { TakeDamage(damage); });
+
         StartCoroutine(flameController.FireAfterDelay(1f));
-        StartCoroutine(TakeDamageVisualEffect(0, health.x, .75f));
+        StartCoroutine(TakeDamageVisualEffect(0, _health.MaxHealth, .75f));
+        lastHealth = _health.MaxHealth;
+    }
+
+    private void OnDisable()
+    {
+        _health.Death.RemoveListener(delegate { StartCoroutine(Death(1f, 5f)); });
+        _health.HealthChanged.RemoveListener(delegate(int damage) { TakeDamage(damage); });
     }
 
     [ContextMenu("Test Take Damage")]
-    public void TestTakeDamage() => TakeDamage(100);
+    public void TestTakeDamage() => _health.TakeDamage(100);
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int newHealth)
     {
-        int resultHealth = Mathf.Clamp(health.y - damage, 0, 100);
-        StartCoroutine(TakeDamageVisualEffect(health.y, resultHealth, 1f));
-        health.y = resultHealth;
+        StartCoroutine(TakeDamageVisualEffect(lastHealth, newHealth, 1f));
+        Debug.Log($"lastHealth: {lastHealth}, newHealth: {newHealth}");
 
-        if (health.y <= 0)
-        {
-            StartCoroutine(Death(1f, 5f));
-        }
-        else
-        {
-            StartCoroutine(flameController.FireAfterDelay(1f));
-        }
+        if (_health.CurrentHealth > 0) StartCoroutine(flameController.FireAfterDelay(1f));
+        lastHealth = _health.CurrentHealth;
     }
 
     private IEnumerator Death(float delay, float duration)
@@ -53,15 +60,13 @@ public class SunBoss : MonoBehaviour
         flameController.flameRing.SetActive(false);
         yield return StartCoroutine(TakeDamageVisualEffect(300, 0, duration * .25f));
         gameObject.SetActive(false);
-        //gameObject.GetComponent<Renderer>().enabled = true;
-        //flameController.gameObject.SetActive(true);
     }
 
 
     private IEnumerator TakeDamageVisualEffect(int currentHealth, int targetHealth, float duration)
     {
-        Vector3 startScale = Vector3.one * ((float) currentHealth / health.x);
-        Vector3 endScale = Vector3.one * ((float) targetHealth / health.x);
+        Vector3 startScale = Vector3.one * ((float) currentHealth / _health.MaxHealth);
+        Vector3 endScale = Vector3.one * ((float) targetHealth / _health.MaxHealth);
         for (float elapsedTime = 0; elapsedTime < duration; elapsedTime += Time.deltaTime)
         {
             HealthCore.localScale = Vector3.LerpUnclamped(

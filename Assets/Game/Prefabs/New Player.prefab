@@ -76,7 +76,7 @@ MonoBehaviour:
   edgeCastDepth: 0.3
   wallCastDistance: 0.2
   wallCastHeight: 0.45
-  maxFlipDistance: 0.45
+  maxFlipDistance: 0.3
   showDebug: 1
 --- !u!114 &2905912705101539874
 MonoBehaviour:
@@ -95,7 +95,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   floorCheckWidth: 0.025
-  rotationAdjustmentSpeed: 5
+  rotationAdjustmentSpeed: 20
   gravityPower: 9.8
 --- !u!50 &2905912705101539878
 Rigidbody2D:
@@ -187,6 +187,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  followStrength: 5
 --- !u!1 &2905912705292183439
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +198,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2905912705292183438}
   - component: {fileID: 2905912705292183436}
-  - component: {fileID: 2905912705292183437}
   m_Layer: 14
   m_Name: Visual
   m_TagString: Untagged
@@ -244,19 +244,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &2905912705292183437
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2905912705292183439}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.27
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2905912705470108118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,6 +1134,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e0f45263807e2c47a6f9e1e7e5c7036, type: 3}
+--- !u!1 &129401724616182929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2997244625971125376, guid: 5e0f45263807e2c47a6f9e1e7e5c7036,
+    type: 3}
+  m_PrefabInstance: {fileID: 2905912705622151185}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &129401724616182930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2997244625971125379, guid: 5e0f45263807e2c47a6f9e1e7e5c7036,
@@ -1156,12 +1149,6 @@ Transform:
 --- !u!95 &129401724616182931 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2997244625971125378, guid: 5e0f45263807e2c47a6f9e1e7e5c7036,
-    type: 3}
-  m_PrefabInstance: {fileID: 2905912705622151185}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &129401724616182929 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2997244625971125376, guid: 5e0f45263807e2c47a6f9e1e7e5c7036,
     type: 3}
   m_PrefabInstance: {fileID: 2905912705622151185}
   m_PrefabAsset: {fileID: 0}
