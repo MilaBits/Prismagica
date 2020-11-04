@@ -19,7 +19,6 @@ public class Flameling : MonoBehaviour
 
     [SerializeField] private bool move = default;
     private Coroutine _playingCoroutine;
-    private bool _running;
 
     private bool _collectable = true;
 
@@ -51,35 +50,6 @@ public class Flameling : MonoBehaviour
         _position = new DTweenVector2(transform.position, speed);
 
         StartCoroutine(SpawnAnimation(1f, Vector3.zero, Vector3.one));
-    }
-
-    private IEnumerator Hover()
-    {
-        _running = true;
-        while (move)
-        {
-            Vector2 start = transform.position;
-            Vector2 target;
-            if (followTarget != null)
-            {
-                target = followTarget.position.AsVector2();
-            }
-            else
-                target = _originalPosition;
-
-            target += new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized *
-                      Random.Range(0, deviationRange);
-
-
-            float duration = hoverSpeed;
-            for (float elapsedTime = 0; elapsedTime < duration; elapsedTime += Time.deltaTime)
-            {
-                transform.position = Vector3.LerpUnclamped(start, target, elapsedTime / duration);
-                yield return null;
-            }
-        }
-
-        _running = false;
     }
 
     public IEnumerator SpawnAnimation(float duration, Vector3 start, Vector3 end)

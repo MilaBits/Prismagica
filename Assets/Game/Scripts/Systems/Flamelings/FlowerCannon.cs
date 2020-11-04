@@ -20,7 +20,6 @@ public class FlowerCannon : MonoBehaviour
 
     [Space] [SerializeField] private float timeBetweenDrains = .1f;
     private float passedTimeSinceDrain = 0;
-    [SerializeField] private int drainSize = 2;
     [Space] [SerializeField] private float fireDelay = 2f;
     private float idleTimePassed = 0;
 

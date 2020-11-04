@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Systems.Player
 {
-    public class NewPixiFlight : MonoBehaviour
+    public class PixiMovement : MonoBehaviour
     {
         private MoveMode moveMode = MoveMode.Follow;
 
@@ -31,8 +31,7 @@ namespace Systems.Player
         private Disc pivotDisc;
 
         private DTweenVector2 _position;
-        [SerializeField]
-        private float followStrength = 5;
+        [SerializeField] private float followStrength = 5;
 
         void Start()
         {
@@ -65,7 +64,7 @@ namespace Systems.Player
             pivotDisc.Color = Color.white;
 
             _position = new DTweenVector2(transform.position, followStrength);
-            
+
             transform.SetParent(null);
         }
 
@@ -73,16 +72,18 @@ namespace Systems.Player
         {
             Vector3 target = MouseToFlyTarget();
 
-            if (Input.GetButtonDown("Power"))
-            {
-                held = true;
-            }
+            // temporarily disabled launching for demo
             
-            if (Input.GetButtonUp("Power"))
-            {
-                held = false;
-                heldDuration = 0;
-            }
+            // if (Input.GetButtonDown("Power"))
+            // {
+            //     held = true;
+            // }
+            //
+            // if (Input.GetButtonUp("Power"))
+            // {
+            //     held = false;
+            //     heldDuration = 0;
+            // }
 
             if (held) heldDuration += Time.deltaTime;
 
@@ -90,7 +91,7 @@ namespace Systems.Player
             {
                 StartCoroutine(Launch(target));
             }
-            
+
 
             if (moveMode != MoveMode.None) Follow(target);
             Draw();
@@ -138,12 +139,9 @@ namespace Systems.Player
 
         private void Follow(Vector3 mousePos)
         {
-            
             _position.omega = followStrength;
             _position.Step(mousePos);
             transform.position = _position.position;
-            
-            // transform.position = Vector2.SmoothDamp(transform.position, mousePos, ref dampVelocity, .3f);
         }
 
         private void Draw()
