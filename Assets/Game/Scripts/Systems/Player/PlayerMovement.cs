@@ -51,7 +51,15 @@ namespace Systems.Player
 
         private void Update()
         {
-            if (Input.GetAxis("Horizontal") == 0) flippedWhileMoving = false;
+            // if (Input.GetAxis("Horizontal") == 0)
+            // {
+            //     flippedWhileMoving = false;
+            // }
+            //
+            // if (Input.GetAxis("Horizontal") != 0 && Input.GetButtonDown("Flip"))
+            // {
+            //     flippedWhileMoving = !flippedWhileMoving;
+            // }
 
             if (Input.GetButtonDown("Flip")) Flip();
             MoveDirection moveDirection = Move();
@@ -65,7 +73,7 @@ namespace Systems.Player
         MoveDirection Move()
         {
             _move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (flippedWhileMoving) _move = new Vector2(-_move.x, _move.y);
+            // if (flippedWhileMoving) _move = new Vector2(-_move.x, _move.y);
 
             MoveDirection direction = MoveDirection.None;
             if (_move.x != 0) direction = _move.x > 0 ? MoveDirection.Right : MoveDirection.Left;

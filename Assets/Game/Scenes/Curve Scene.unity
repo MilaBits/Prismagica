@@ -21446,7 +21446,7 @@ PrefabInstance:
     - target: {fileID: 4647363219349885436, guid: e4c1ad6eece5c0041b46e215f0e22b9e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4647363219349885439, guid: e4c1ad6eece5c0041b46e215f0e22b9e,
         type: 3}
@@ -32123,8 +32123,8 @@ MonoBehaviour:
     type: 2}
   followOmega: 3
   zoomOmega: 1
-  rotationOmega: 2
-  flipDelay: 0.5
+  rotationOmega: 10
+  flipDelay: 0
   playerTarget:
     target: {fileID: 1476341540}
     zoomLevel: 3.5
@@ -57498,7 +57498,7 @@ GameObject:
   m_Icon: {fileID: 2800000, guid: f082e69f825d0aa44b687e592731c0a8, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1510383708
 Transform:
   m_ObjectHideFlags: 0

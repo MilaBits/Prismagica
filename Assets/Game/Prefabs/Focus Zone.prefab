@@ -39,7 +39,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8381993394669296575}
-  - component: {fileID: 8381993394669296572}
   - component: {fileID: 8381993394669296573}
   m_Layer: 11
   m_Name: Focus Zone
@@ -63,19 +62,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8381993394669296572
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8381993394669296570}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8381993394669296573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +74,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c435465bfebbfd4fa56b3feb331e6fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTargetRuntimeSet: {fileID: 11400000, guid: 9e145525b69dfeb4b909b7bad169ed3c,
+    type: 2}
   cameraTarget:
     target: {fileID: 8381993394168540176}
     zoomLevel: 3
     priority: 1
+    offset: {x: 0, y: 0, z: -10}
+    up: {x: 0, y: 1, z: 0}
+    RotateWithPlayer: 0
+    Interpolate: 0

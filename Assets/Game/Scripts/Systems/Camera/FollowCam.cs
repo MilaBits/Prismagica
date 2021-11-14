@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using Flask;
+﻿using Flask;
 using Game.Scripts.Systems.RuntimeSet;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 
 namespace Systems.Camera
 {
     public class FollowCam : MonoBehaviour
     {
-        // [SerializeField] private Vector3 cameraOffset = default;
-
         [Header("References")] [SerializeField]
         private GameObject parallax = default;
 
@@ -46,16 +42,8 @@ namespace Systems.Camera
 
         private void OnEnable() => CameraTargetRuntimeSet.ItemsChanged.AddListener(delegate { GetTopTarget(); });
         private void OnDisable() => CameraTargetRuntimeSet.ItemsChanged.RemoveListener(delegate { GetTopTarget(); });
-
         private void Update()
         {
-            if (Input.GetButton("Flip"))
-            {
-                flipTime = 0;
-            }
-
-            flipTime += Time.deltaTime;
-
             UpdatePosition();
             transform.GetChild(0).localScale = new Vector3(cam.orthographicSize * .5f, cam.orthographicSize * .5f, 1);
         }
@@ -89,30 +77,13 @@ namespace Systems.Camera
             _position.Step(targetCamPos);
             transform.position = _position;
 
-            // Rotation stuff
-            if (flipTime > flipDelay)
-            {
-                quaternion targetRotation = currentTarget.RotateWithPlayer
-                    ? playerTarget.target.transform.rotation
-                    : currentTarget.target.transform.rotation;
+            quaternion targetRotation = currentTarget.RotateWithPlayer
+                ? playerTarget.target.transform.rotation
+                : currentTarget.target.transform.rotation;
 
-                _rotation.omega = rotationOmega;
-                _rotation.Step(targetRotation);
-                transform.rotation = _rotation;
-            }
-        }
-
-        [ContextMenu("Snap Camera")]
-        private void SnapCam()
-        {
-            CameraTarget target = GetTopTarget();
-
-            transform.position = target.target.transform.position + transform.TransformDirection(target.offset);
-            transform.rotation = Quaternion.Euler(0, 0, target.target.transform.rotation.eulerAngles.z);
-
-            _zoom = new DTween(target.zoomLevel, 1);
-            _position = new DTweenVector3(transform.position, 1);
-            _rotation = new DTweenQuaternion(transform.rotation, 1);
+            _rotation.omega = rotationOmega;
+            _rotation.Step(targetRotation);
+            transform.rotation = _rotation;
         }
 
         private CameraTarget GetTopTarget()
@@ -129,6 +100,19 @@ namespace Systems.Camera
             }
 
             return target;
+        }
+        
+        [ContextMenu("Snap Camera")]
+        private void SnapCam()
+        {
+            CameraTarget target = GetTopTarget();
+
+            transform.position = target.target.transform.position + transform.TransformDirection(target.offset);
+            transform.rotation = Quaternion.Euler(0, 0, target.target.transform.rotation.eulerAngles.z);
+
+            _zoom = new DTween(target.zoomLevel, 1);
+            _position = new DTweenVector3(transform.position, 1);
+            _rotation = new DTweenQuaternion(transform.rotation, 1);
         }
     }
 }
